@@ -1,0 +1,148 @@
+@import url("reset.css");
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to right, #333399, #ff00cc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-card {
+    width: 450px;
+    background: rgba(255,255,255, .5);
+    padding: 4rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.user-card::before{
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255, .15);
+    inset: 0;
+    transform: rotate(-5deg);
+    z-index: -1;
+}
+
+.user-card-logo {
+    margin-bottom: 2rem;
+}
+
+.user-card-logo img {
+    width: 60px;
+}
+
+.user-card-logo,
+.user-card-header,
+.user-card-footer {
+    text-align: center;
+}
+
+.user-card a:hover {
+    text-decoration: underline;
+}
+
+.user-card-header {
+    margin-bottom: 2rem;
+}
+
+.user-card-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+.user-card-header h1 + div {
+    font-size: calc(1rem * .8);
+    opacity: .8;
+}
+
+.user-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.user-card-form .form-item {
+    position: relative;
+}
+
+.user-card-form .form-item .form-item-icon {
+    position: absolute;
+    top: .82rem;
+    left: 1.4rem;
+    font-size: 1.3rem;
+    opacity: .4;
+}
+
+.form-item-other {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(1rem * .8);
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+}
+
+.user-card-footer {
+    margin-top: 1.5rem;
+    font-size: calc(1rem *.8);
+}
+
+.user-card input[type="text"],
+.user-card input[type="password"],
+.user-card input[type="email"] {
+    border: none;
+    outline: none;
+    background:  rgba(255,255,255, .3);
+    padding: 1rem 1.5rem;
+    padding-left: calc(1rem * 3.5);
+    border-radius: 100px;
+    width: 100%;
+    transition: background .5s;
+}
+
+.user-card input:focus {
+    background: white;
+}
+
+.user-card input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: black;
+}
+
+.user-card-form button {
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: background .5s;
+}
+
+.user-card-form button:hover {
+    background-color: rgba(0, 0, 0, .85);
+    cursor: pointer;
+}
+.mssg{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    body{
+        padding: 2rem 0;
+    }
+
+    .user-card {
+        width: 300px;
+        padding: 2rem;
+    }
+}

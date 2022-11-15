@@ -1,0 +1,65 @@
+body {
+  background-color: #fcfcfc;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.banner{
+  background-color: #78acff;
+}
+
+.banner_content{
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.banner_text{
+  display: inline;
+  color: white;
+  margin-left: 20px;
+  font-family: sans-serif;
+  font-size: large;
+  position: absolute;
+  top: 20px;
+}
+
+.username{
+  display: inline;
+}
+
+.banner_profile{
+ display: inline;
+}
+
+/*Circular crop on the profile image*/
+.profile_image{
+  display: inline;
+  object-fit: cover;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.material-symbols-outlined {
+  text-align: right;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+/* CSS for the login page starts here: */
+
+#loginScreen{
+  padding-left: 500px;
+  padding-top: 100px;
+}
+
+#loginButton{
+  margin-left: 300px; 
+  padding: 5px;
+  text-align: right;
+}
+
+
