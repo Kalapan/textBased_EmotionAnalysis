@@ -15,18 +15,27 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script type="text/javascript" src="jquery-1.5.min.js"></script>
 		
-		<script type="text/javascript">
+		<script type="text/javascript">			
+			let emotionHappiness = '<%-emotionHappiness%>'
+			let emotionAnger = '<%-emotionAnger%>'
+			let emotionNeutral = '<%-emotionNeutral%>'
+			let emotionDepression = '<%-emotionDepression%>'
+			let emotionAnxiety = '<%-emotionAnxiety%>'
+
+			function refresh() {
+				window.location.reload();
+			}
 			//Creating the donut chart:
 			google.charts.load("current", {packages:["corechart"]});
 			google.charts.setOnLoadCallback(drawDonutChart);
 			function drawDonutChart() {
 				var data = google.visualization.arrayToDataTable([
-				['Emotion', 'Score'],
-				['Happiness', 	20],
-				['Depression',	10],
-				['Anger', 		15],
-				['Anxiety',		 5],
-				['Neutral',		25]
+					['Emotion', 'Score'],
+					['Happiness', Number(emotionHappiness)],
+					['Depression', Number(emotionDepression)],
+					['Anger', Number(emotionAnger)],
+					['Anxiety', Number(emotionAnxiety)],
+					['Neutral',	Number(emotionNeutral)]
 				]);
 
 				var options = {
@@ -45,8 +54,6 @@
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
 			}
-
-
 			//Creating the line chart:
 			google.charts.load("current", {packages:["corechart"]});
 			google.charts.setOnLoadCallback(drawLineChart);
@@ -87,7 +94,7 @@
 					</div>
 					<!--Twitter Username-->
 					<div class="banner_text">
-						<p class="username">@<%= twitter_id %></p>
+						<p class="username">@<%= name %></p>
 						<!--Settings icon-->
 						<span class="material-symbols-outlined" style="margin-left:1250px;">menu</span>
 						<!--Settings icon-->
@@ -129,6 +136,9 @@
 			</div>
 			<form class="user-card-form" id="getTwitterID" method="post" action="/update">
 				<button type="submit" value="update" id="update">Update</button>
+			</form>
+			<form class="user-card-form" id="pullData" method="post" action="/pullData">
+				<button type="submit" value="update" id="update" onClick="refresh()">pull data</button>
 			</form>
 		</div>
 	</body>

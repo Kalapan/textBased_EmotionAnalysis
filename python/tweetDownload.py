@@ -36,7 +36,7 @@ columns = ['Twitter_ID','Date', 'Time', 'Tweet', 'Emotion', 'Value']
 data = []
 
 #get the latest tweet and format
-for info in tweets [:1]:
+for info in tweets [:4]:
     #assign which model to use
     emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
     #get the emotion of the tweet
