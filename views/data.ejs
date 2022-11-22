@@ -17,14 +17,12 @@
 		
 		<script type="text/javascript">			
 			let emotionHappiness = '<%-emotionHappiness%>'
+			let HappinessDisplay = '<%-HappinessDisplay%>'
 			let emotionAnger = '<%-emotionAnger%>'
 			let emotionNeutral = '<%-emotionNeutral%>'
 			let emotionDepression = '<%-emotionDepression%>'
 			let emotionAnxiety = '<%-emotionAnxiety%>'
-
-			function refresh() {
-				window.location.reload();
-			}
+			let month = '<%-month%>'
 			//Creating the donut chart:
 			google.charts.load("current", {packages:["corechart"]});
 			google.charts.setOnLoadCallback(drawDonutChart);
@@ -50,42 +48,16 @@
 					4: { color: 'green' }
 				}
 				};
-
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
+				document.getElementById("test").innerText = HappinessDisplay;
 			}
-			//Creating the line chart:
-			google.charts.load("current", {packages:["corechart"]});
-			google.charts.setOnLoadCallback(drawLineChart);
-			function drawLineChart() {
-				var data = google.visualization.arrayToDataTable([
-				['Date', 'Happiness', 'Depression', 'Anger', 'Anxiety', 'Neutral'],
-				['02-Oct-22', 20,			10,			 5,			5,		 25    ],
-				['09-Oct-22',	30,			 5,			 5,			10,		 20    ],
-				['16-Oct-22', 10,			30,			15,			15,		 10    ],
-				['23-Oct-22',	15,			20,			10,			20,		 30    ],
-				['30-Oct-22',	30,			10,			 5,			10,		 15    ]
-				]);
-
-				var options = {
-				title: 'Emotion Score Based on Tweets',
-				backgroundColor: 'transparent',
-				legend: {position: 'bottom'},
-				series: {
-					0: { color: 'gold' },
-					1: { color: 'blue' },
-					2: { color: 'red' },
-					3: { color: 'purple' },
-					4: { color: 'green' }
-				}
-				};
-
-				var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
-				chart.draw(data, options);
+			function getMonth(){
+				document.getElementById("donut_select").value = month;
 			}
 		</script>
 	</head>
-	<body>
+	<body onload="getMonth()">
 			<div class="banner" id="banner">
 				<div class="banner_content">
 					<!--Twitter Profile Image-->
@@ -109,37 +81,53 @@
 				<table>	
 					<tr>
 						<td><div id="donut_chart" style="width: 700px; height: 500px;"></div></td>
-						<td><div id="line_chart" style="width: 700px; height: 300px;"></div></td>
 					</tr>
 					<tr>
-						<!--Centering this text below the charts-->
-						<td><center>Sort by:</center></td>
 						<td><center>Sort by:</center></td>
 					</tr>
-					<tr>
-						<!--Buttons to change the dataset from monthly, yearly, etc.-->
-						<td><center><select id="donut_select">
-							<option value="monthly">Monthly</option>
-							<option value="yearly">Yearly</option>
-							<option value="lifetime">Lifetime</option>
-						</select></center></td>
-						<td><center><select id="line_select">
-							<option value="monthly">Monthly</option>
-							<option value="yearly">Yearly</option>
-							<option value="lifetime">Lifetime</option>
-						</select></center></td>
-					</tr>
+						<td>
+							<center>
+								<form id="monthSelection" action="/monthSelection" method="post">
+									<select id="donut_select" class="donut_select" name="donut_select">
+										<option value="01">January</option>
+										<option value="02">February</option>
+										<option value="03">March</option>
+										<option value="04">April</option>
+										<option value="05">May</option>
+										<option value="06">June</option>
+										<option value="07">July</option>
+										<option value="08">August</option>
+										<option value="09">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+									<input type="submit" name="submit"/>
+								</form>
+							</center>
+						</td>
 				</table>
 			</div>
+			<!-- <div>
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Tweet</th>
+						<th>Emotion Type</th>
+						<th>Emotion Value</th>
+					</tr>
+				</thead>
+				<tbody id="populate-table">
+
+				</tbody>
+			</div> -->
 			<div class="abc">
 				<a href="/logout">Logout</a>
 			</div>
 			<form class="user-card-form" id="getTwitterID" method="post" action="/update">
 				<button type="submit" value="update" id="update">Update</button>
 			</form>
-			<form class="user-card-form" id="pullData" method="post" action="/pullData">
-				<button type="submit" value="update" id="update" onClick="refresh()">pull data</button>
-			</form>
+			<p id="test"></p>
 		</div>
 	</body>
 </html>

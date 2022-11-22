@@ -48,18 +48,3 @@ body {
   'GRAD' 0,
   'opsz' 48
 }
-
-/* CSS for the login page starts here: */
-
-#loginScreen{
-  padding-left: 500px;
-  padding-top: 100px;
-}
-
-#loginButton{
-  margin-left: 300px; 
-  padding: 5px;
-  text-align: right;
-}
-
-

@@ -3,13 +3,17 @@ var router = express.Router();
 var User = require('../models/user');
 const {spawn} = require('child_process');
 const e = require('express');
+var dotenv = require('dotenv').config()
 
 let userName = "";
+let month = "01";
 var emotionHappiness = 0;
 var emotionDepression = 0;
 var emotionAnger = 0;
 var emotionAnxiety = 0;
 var emotionNeutral = 0;
+var emotionNeutral1 = 0;
+var HappinessDisplay = [];
 
 router.get('/', function (req, res, next) {
 	return res.render('index.ejs');
@@ -50,13 +54,13 @@ router.post('/', function(req, res, next) {
 								console.log('Success');
 						});
 					}).sort({_id: -1}).limit(1);
-					res.send({"Success":"You are regestered,You can login now."});
+					res.send({"Success":"You have been registered."});
 				}else{
 					res.send({"Success":"Email is already used."});
 				}
 			});
 		}else{
-			res.send({"Success":"password is not matched"});
+			res.send({"Success":"Passwaord does not match."});
 		}
 	}
 });
@@ -94,7 +98,15 @@ router.get('/profile', function (req, res, next) {
 			res.redirect('/');
 		}else{
 			userName = {"twitter_id":data.twitter_id};
-			return res.render('data.ejs', {name:userName.twitter_id, emotionHappiness: emotionHappiness, emotionDepression: emotionDepression, emotionAnger: emotionAnger, emotionAnxiety: emotionAnxiety, emotionNeutral: emotionNeutral});
+			return res.render('data.ejs', {
+				name:userName.twitter_id,
+				month: month,
+				emotionHappiness: emotionHappiness,
+				HappinessDisplay: HappinessDisplay, 
+				emotionDepression: emotionDepression, 
+				emotionAnger: emotionAnger, 
+				emotionAnxiety: emotionAnxiety, 
+				emotionNeutral: emotionNeutral});
 		}
 	});
 });
@@ -130,28 +142,36 @@ router.post('/update', function (req, res, next) {
 	});
 });
 
-router.post('/pullData', function (req, res, next) {
-	console.log("pullData")
+router.post('/monthSelection', function (req, res, next) {
+	console.log("monthSelection")
+	month = req.body.donut_select;
+	console.log(req.body.donut_select);
 	var MongoClient = require('mongodb').MongoClient;
-	var url = "mongodb+srv://Kalapan:100759041@textanalysis.e25lfc3.mongodb.net/User?retryWrites=true&w=majority";
+	var url = process.env.MongoLogIn;
 	MongoClient.connect(url, function(err, db) {
 		if (err) throw err;
 		var dbo = db.db("User");
 		dbo.collection("tweets_information").find({
 			Twitter_ID: userName.twitter_id,
+			Month: month,
 		}).project({
 			_id: 0,
-			Emotion: 1
+			Date: 1,
+			Tweet: 1,
+			Emotion: 1,
+			Value: 1
 		}).toArray(function(err, result) {
 		  if (err) throw err;
 		  	emotionHappiness = 0;
 			emotionDepression = 0;
 			emotionAnger = 0;
 			emotionAnxiety = 0;
-			emotionNeutral = 0;
+			emotionNeutral1 = 0;
 			result.forEach(function(emotionType){
 				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion.includes("approval") || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
 					emotionHappiness += 1;
+					HappinessDisplay.push(emotionType);
+					console.log(HappinessDisplay);
 				} else if (emotionType.Emotion.includes("grief") || emotionType.Emotion.includes("remorse") || emotionType.Emotion.includes("sadness")) {
 					emotionDepression += 1;
 				} else if (emotionType.Emotion.includes("anger") || emotionType.Emotion.includes("annoyance") || emotionType.Emotion.includes("disappointment") || emotionType.Emotion.includes("disapproval") || emotionType.Emotion.includes("disgust")) {
@@ -159,10 +179,12 @@ router.post('/pullData', function (req, res, next) {
 				} else if (emotionType.Emotion.includes("embarrassment") || emotionType.Emotion.includes("fear") || emotionType.Emotion.includes("nervousness")) {
 					emotionAnxiety += 1;
 				} else {
-					emotionNeutral += 1;
+					emotionNeutral1 += 1;
 				}
 			});
 			db.close();
+			emotionNeutral1 /= 2;
+			emotionNeutral = Math.trunc(emotionNeutral1);
 		});
 	});
 	setTimeout((() => {

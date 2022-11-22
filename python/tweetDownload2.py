@@ -1,6 +1,6 @@
 from http import client
 from dotenv import dotenv_values, load_dotenv
-import tweepy
+import snscrape.modules.twitter as sntwitter
 import pandas as pd
 from pymongo import MongoClient
 from transformers import RobertaTokenizerFast, TFRobertaForSequenceClassification, pipeline
@@ -15,11 +15,6 @@ db = client.get_database('User')
 #get collection object in database
 tweets_collection = db.tweets_information
 
-#authenticate twitter account using credentials from the env file
-authenticate = tweepy.OAuthHandler(config["api_key"], config["api_key_secret"])
-authenticate.set_access_token(config["access_token"], config["access_token_secret"])
-api = tweepy.API(authenticate)
-
 #required to make the text analyzer know where to get required model and architecture
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBERTa")
@@ -27,21 +22,24 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 #assign the users twitter id to userID
 # userID = str(sys.argv[1])
 userID = 'elonMusk'
-
-#parameters set to get the tweets
-tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = False, exclude_replies = True, tweet_mode = 'extended')
+fromTag = "from:"
+endDate = "until:2022-05-01"
+startDate = "since:2022-04-01"
+query = fromTag + userID + " " + startDate + " " + endDate
 
 #set the column title which the tweets will be saved in
-columns = ['Twitter_ID','Date', 'Time', 'Tweet', 'Emotion', 'Value']
+columns = ['Twitter_ID','Date', 'Month', 'Time', 'Tweet', 'Emotion', 'Value']
 #make an array to hold the data
 data = []
 
-#get the latest tweet and format
-for info in tweets [:42]:
+# Using TwitterSearchScraper to scrape data and append tweets to list
+for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
+    if i>20:
+        break
     #assign which model to use
     emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
     #get the emotion of the tweet
-    emotion_labels = emotion(info.full_text)
+    emotion_labels = emotion(tweet.content)
     #convert the list to a dictionary
     emotionOutput = emotion_labels[0]
     #get the emotion type and assign to a variable
@@ -50,29 +48,20 @@ for info in tweets [:42]:
     emotionScore = round(emotionOutput.get('score'), 2)
 
     # get the tweet date
-    tweetDate = info.created_at.strftime("%m-%d-%Y")
+    tweetDate = tweet.date.strftime("%m-%d-%Y")
+    # get the tweet month
+    tweetMonth = tweet.date.strftime("%m")
     # get the tweet time
-    tweetTime = info.created_at.strftime("%H:%M:%S")
+    tweetTime = tweet.date.strftime("%H:%M:%S")
 
     # add all the data to an array
-    data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
-
-    # # check if the tweet already exists in database
-    # item_details = tweets_collection.find()
-    # for item in item_details:
-    #     if item['Tweet'] == info.full_text :
-    #         # if it exists fail
-    #         print('tweet already exists')
-    #     else :
-    #         #add the tweets info to a variable
-    #         data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
+    data.append([userID, tweetDate, tweetMonth, tweetTime, tweet.content, emotionType, emotionScore])
 
 # convert data into a dataframe
 df = pd.DataFrame(data, columns = columns)
 
-print(df)
-# # make the dataframe a dictionary
-# data = df.to_dict(orient = "records")
+# make the dataframe a dictionary
+data = df.to_dict(orient = "records")
 
-# # send the dictionary to mongodb
-# tweets_collection.insert_many(data)
+# send the dictionary to mongodb
+tweets_collection.insert_many(data)
