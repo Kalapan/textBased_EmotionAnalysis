@@ -4,6 +4,7 @@
 		<title>Welcome</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="./css/main.css">
+		<link rel="stylesheet" href="./css/tweet.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!--Referencing Google charts-->
@@ -16,13 +17,15 @@
 		<script type="text/javascript" src="jquery-1.5.min.js"></script>
 		
 		<script type="text/javascript">			
-			let emotionHappiness = '<%-emotionHappiness%>'
-			let HappinessDisplay = '<%-HappinessDisplay%>'
-			let emotionAnger = '<%-emotionAnger%>'
-			let emotionNeutral = '<%-emotionNeutral%>'
-			let emotionDepression = '<%-emotionDepression%>'
-			let emotionAnxiety = '<%-emotionAnxiety%>'
-			let month = '<%-month%>'
+			let emotionHappiness = '<%-emotionHappiness%>';
+			let HappinessDisplay = '<%-HappinessDisplay%>';
+			let HappDisplay = JSON.parse(HappinessDisplay);
+			let emotionAnger = '<%-emotionAnger%>';
+			let emotionNeutral = '<%-emotionNeutral%>';
+			let emotionDepression = '<%-emotionDepression%>';
+			let emotionAnxiety = '<%-emotionAnxiety%>';
+			let month = '<%-month%>';
+			console.log(emotionHappiness);
 			//Creating the donut chart:
 			google.charts.load("current", {packages:["corechart"]});
 			google.charts.setOnLoadCallback(drawDonutChart);
@@ -50,7 +53,15 @@
 				};
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
-				document.getElementById("test").innerText = HappinessDisplay;
+				// var temp = "";
+				// for (var i = 0; i < emotionHappiness; i++) {
+				// 	temp += HappDisplay[i].Tweet;
+				// }
+				// document.getElementById("test").innerHTML = temp;
+				document.getElementById("tweet_date").innerHTML = HappDisplay[0].Date;
+				document.getElementById("tweet_emotion").innerHTML = HappDisplay[0].Emotion;
+				document.getElementById("tweet_emotionValue").innerHTML = HappDisplay[0].Value;
+				document.getElementById("tweet_content").innerHTML = HappDisplay[0].Tweet;
 			}
 			function getMonth(){
 				document.getElementById("donut_select").value = month;
@@ -75,52 +86,44 @@
 				</div>
 				</div>
 			</div>
-			
-			<!--Banner is complete, now for the main body of the page:-->
-			<div class="charts">
-				<table>	
-					<tr>
-						<td><div id="donut_chart" style="width: 700px; height: 500px;"></div></td>
-					</tr>
-					<tr>
-						<td><center>Sort by:</center></td>
-					</tr>
-						<td>
-							<center>
-								<form id="monthSelection" action="/monthSelection" method="post">
-									<select id="donut_select" class="donut_select" name="donut_select">
-										<option value="01">January</option>
-										<option value="02">February</option>
-										<option value="03">March</option>
-										<option value="04">April</option>
-										<option value="05">May</option>
-										<option value="06">June</option>
-										<option value="07">July</option>
-										<option value="08">August</option>
-										<option value="09">September</option>
-										<option value="10">October</option>
-										<option value="11">November</option>
-										<option value="12">December</option>
-									</select>
-									<input type="submit" name="submit"/>
-								</form>
-							</center>
-						</td>
-				</table>
+			<table>	
+				<div id="donut_chart" style="width: 700px; height: 500px;"></div>
+				<p>Sort by:</p>
+				<td>
+					<center>
+						<form id="monthSelection" action="/monthSelection" method="post">
+							<select id="donut_select" class="donut_select" name="donut_select">
+								<option value="01">January</option>
+								<option value="02">February</option>
+								<option value="03">March</option>
+								<option value="04">April</option>
+								<option value="05">May</option>
+								<option value="06">June</option>
+								<option value="07">July</option>
+								<option value="08">August</option>
+								<option value="09">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+							</select>
+							<input type="submit" name="submit"/>
+						</form>
+					</center>
+				</td>
+			</table>
+			<div class="layout">
+				<div class="layout__main">
+				  <div class="tweet">
+					<div class="tweet__main">
+						<div class="tweet__header">
+							<div class="tweet_date" id="tweet_date"></div>
+							<div class="tweet_emotion" id="tweet_emotion"></div>
+							<div class="tweet_emotionValue" id="tweet_emotionValue"></div>
+						</div>
+						<div class="tweet_content" id="tweet_content"></div>
+					</div>
+				</div>
 			</div>
-			<!-- <div>
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Tweet</th>
-						<th>Emotion Type</th>
-						<th>Emotion Value</th>
-					</tr>
-				</thead>
-				<tbody id="populate-table">
-
-				</tbody>
-			</div> -->
 			<div class="abc">
 				<a href="/logout">Logout</a>
 			</div>

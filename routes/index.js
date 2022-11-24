@@ -14,6 +14,7 @@ var emotionAnxiety = 0;
 var emotionNeutral = 0;
 var emotionNeutral1 = 0;
 var HappinessDisplay = [];
+var Happiness = [];
 
 router.get('/', function (req, res, next) {
 	return res.render('index.ejs');
@@ -119,6 +120,10 @@ router.get('/logout', function (req, res, next) {
 			if (err) {
 				return next(err);
 			} else {
+				userName = "";
+				month = "01";
+				emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = 0;
+				HappinessDisplay = Happiness = [];
 				return res.redirect('/login');
 			}
 		});
@@ -156,22 +161,20 @@ router.post('/monthSelection', function (req, res, next) {
 			Month: month,
 		}).project({
 			_id: 0,
+			Twitter_ID: 1,
 			Date: 1,
 			Tweet: 1,
 			Emotion: 1,
 			Value: 1
 		}).toArray(function(err, result) {
 		  if (err) throw err;
-		  	emotionHappiness = 0;
-			emotionDepression = 0;
-			emotionAnger = 0;
-			emotionAnxiety = 0;
-			emotionNeutral1 = 0;
+		  	emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = 0;
+			HappinessDisplay = Happiness = [];
 			result.forEach(function(emotionType){
 				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion.includes("approval") || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
 					emotionHappiness += 1;
-					HappinessDisplay.push(emotionType);
-					console.log(HappinessDisplay);
+					Happiness.push(emotionType);
+					HappinessDisplay = JSON.stringify(Happiness);
 				} else if (emotionType.Emotion.includes("grief") || emotionType.Emotion.includes("remorse") || emotionType.Emotion.includes("sadness")) {
 					emotionDepression += 1;
 				} else if (emotionType.Emotion.includes("anger") || emotionType.Emotion.includes("annoyance") || emotionType.Emotion.includes("disappointment") || emotionType.Emotion.includes("disapproval") || emotionType.Emotion.includes("disgust")) {
@@ -181,6 +184,7 @@ router.post('/monthSelection', function (req, res, next) {
 				} else {
 					emotionNeutral1 += 1;
 				}
+				// console.log(emotionType)
 			});
 			db.close();
 			emotionNeutral1 /= 2;
@@ -200,7 +204,7 @@ router.post('/forgetpass', function (req, res, next) {
 	User.findOne({email:req.body.email},function(err,data){
 		console.log(data);
 		if(!data){
-			res.send({"Success":"This Email Is not regestered!"});
+			res.send({"Success":"This Email is not regestered!"});
 		}else{
 			if (req.body.password==req.body.passwordConf) {
 			data.password=req.body.password;
