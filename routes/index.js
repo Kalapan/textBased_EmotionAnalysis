@@ -103,7 +103,7 @@ router.get('/profile', function (req, res, next) {
 				name:userName.twitter_id,
 				month: month,
 				emotionHappiness: emotionHappiness,
-				HappinessDisplay: HappinessDisplay, 
+				HappinessDisplay: HappinessDisplay,
 				emotionDepression: emotionDepression, 
 				emotionAnger: emotionAnger, 
 				emotionAnxiety: emotionAnxiety, 
@@ -115,14 +115,13 @@ router.get('/profile', function (req, res, next) {
 router.get('/logout', function (req, res, next) {
 	console.log("logout")
 	if (req.session) {
-		// delete session object
 		req.session.destroy(function (err) {
 			if (err) {
 				return next(err);
 			} else {
 				userName = "";
 				month = "01";
-				emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = 0;
+				emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = emotionNeutral = 0;
 				HappinessDisplay = Happiness = [];
 				return res.redirect('/login');
 			}
@@ -163,13 +162,15 @@ router.post('/monthSelection', function (req, res, next) {
 			_id: 0,
 			Twitter_ID: 1,
 			Date: 1,
+			Month: 1,
 			Tweet: 1,
 			Emotion: 1,
 			Value: 1
 		}).toArray(function(err, result) {
 		  if (err) throw err;
-		  	emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = 0;
-			HappinessDisplay = Happiness = [];
+		  	emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = emotionNeutral = 0;
+			HappinessDisplay = [];
+			Happiness = [];
 			result.forEach(function(emotionType){
 				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion.includes("approval") || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
 					emotionHappiness += 1;
@@ -184,7 +185,6 @@ router.post('/monthSelection', function (req, res, next) {
 				} else {
 					emotionNeutral1 += 1;
 				}
-				// console.log(emotionType)
 			});
 			db.close();
 			emotionNeutral1 /= 2;

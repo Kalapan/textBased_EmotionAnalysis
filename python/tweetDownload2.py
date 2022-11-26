@@ -21,10 +21,10 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 
 #assign the users twitter id to userID
 # userID = str(sys.argv[1])
-userID = 'JoeBiden'
+userID = 'elonMusk'
 fromTag = "from:"
-startDate = "since:2022-05-01"
-endDate = "until:2022-06-01"
+startDate = "since:2022-03-29"
+endDate = "until:2022-03-30"
 query = fromTag + userID + " " + startDate + " " + endDate
 
 #set the column title which the tweets will be saved in
@@ -53,9 +53,11 @@ for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
     tweetMonth = tweet.date.strftime("%m")
     # get the tweet time
     tweetTime = tweet.date.strftime("%H:%M:%S")
+    #remove line break
+    tweet = tweet.content.replace("\n", "")
 
     # add all the data to an array
-    data.append([userID, tweetDate, tweetMonth, tweetTime, tweet.content, emotionType, emotionScore])
+    data.append([userID, tweetDate, tweetMonth, tweetTime, tweet, emotionType, emotionScore])
 
 # convert data into a dataframe
 df = pd.DataFrame(data, columns = columns)

@@ -14,9 +14,8 @@
 		<!--Referencing Google icons page for menu icon-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<script type="text/javascript" src="jquery-1.5.min.js"></script>
 		
-		<script type="text/javascript">			
+		<script type="text/javascript">
 			let emotionHappiness = '<%-emotionHappiness%>';
 			let HappinessDisplay = '<%-HappinessDisplay%>';
 			let HappDisplay = JSON.parse(HappinessDisplay);
@@ -25,7 +24,6 @@
 			let emotionDepression = '<%-emotionDepression%>';
 			let emotionAnxiety = '<%-emotionAnxiety%>';
 			let month = '<%-month%>';
-			console.log(emotionHappiness);
 			//Creating the donut chart:
 			google.charts.load("current", {packages:["corechart"]});
 			google.charts.setOnLoadCallback(drawDonutChart);
@@ -58,10 +56,45 @@
 				// 	temp += HappDisplay[i].Tweet;
 				// }
 				// document.getElementById("test").innerHTML = temp;
-				document.getElementById("tweet_date").innerHTML = HappDisplay[0].Date;
-				document.getElementById("tweet_emotion").innerHTML = HappDisplay[0].Emotion;
-				document.getElementById("tweet_emotionValue").innerHTML = HappDisplay[0].Value;
-				document.getElementById("tweet_content").innerHTML = HappDisplay[0].Tweet;
+				for (var i = 0; i < emotionHappiness; i++) {
+					let layoutTweetDateDiv = document.createElement('div');
+					layoutTweetDateDiv.classList.add('tweet_date');
+					let layoutTweetDateDivText = document.createTextNode(HappDisplay[i].Date); 
+					layoutTweetDateDiv.appendChild(layoutTweetDateDivText);
+
+					let layoutTweetEmotionDiv = document.createElement('div');
+					layoutTweetEmotionDiv.classList.add('tweet_emotion');
+					let layoutTweetEmotionDivText = document.createTextNode(HappDisplay[i].Emotion); 
+					layoutTweetEmotionDiv.appendChild(layoutTweetEmotionDivText);
+
+					let layoutTweetEmotionValueDiv = document.createElement('div');
+					layoutTweetEmotionValueDiv.classList.add('tweet_emotionValue');
+					let layoutTweetEmotionValueDivText = document.createTextNode(HappDisplay[i].Value); 
+					layoutTweetEmotionValueDiv.appendChild(layoutTweetEmotionValueDivText);
+
+					let layoutTweetHeaderMainDiv = document.createElement('div');
+					layoutTweetHeaderMainDiv.classList.add('tweet_header');
+					layoutTweetHeaderMainDiv.appendChild(layoutTweetDateDiv);
+					layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionDiv);
+					layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionValueDiv);
+
+					let layoutTweetContentDiv = document.createElement('div');
+					layoutTweetContentDiv.classList.add('tweet_content');
+					let layoutTweetContentDivText = document.createTextNode(HappDisplay[i].Tweet); 
+					layoutTweetContentDiv.appendChild(layoutTweetContentDivText);
+
+					let layoutTweetDiv = document.createElement('div');
+					layoutTweetDiv.classList.add('tweet');
+					layoutTweetDiv.appendChild(layoutTweetHeaderMainDiv);
+					layoutTweetDiv.appendChild(layoutTweetContentDiv);
+					
+					let layoutDiv = document.createElement('div');
+					layoutDiv.classList.add('layout');
+					layoutDiv.appendChild(layoutTweetDiv);
+					
+					let parent = document.querySelector('#tweetDisplay');
+					parent.appendChild(layoutDiv);
+				}
 			}
 			function getMonth(){
 				document.getElementById("donut_select").value = month;
@@ -71,26 +104,21 @@
 	<body onload="getMonth()">
 			<div class="banner" id="banner">
 				<div class="banner_content">
-					<!--Twitter Profile Image-->
 					<div class="banner_profile">
 						<img class="profile_image" src="loginLogo.png" alt="Profile Picture" style="width:50px;height:50px;">
 					</div>
-					<!--Twitter Username-->
 					<div class="banner_text">
 						<p class="username">@<%= name %></p>
-						<!--Settings icon-->
 						<span class="material-symbols-outlined" style="margin-left:1250px;">menu</span>
-						<!--Settings icon-->
 						<span class="material-symbols-outlined">settings</span>
-			
-				</div>
+					</div>
 				</div>
 			</div>
-			<table>	
+			<div class="chart">
 				<div id="donut_chart" style="width: 700px; height: 500px;"></div>
-				<p>Sort by:</p>
-				<td>
-					<center>
+				<table class="table_selection">	
+					<td>
+						<div>Sort by:</div>
 						<form id="monthSelection" action="/monthSelection" method="post">
 							<select id="donut_select" class="donut_select" name="donut_select">
 								<option value="01">January</option>
@@ -108,28 +136,16 @@
 							</select>
 							<input type="submit" name="submit"/>
 						</form>
-					</center>
-				</td>
-			</table>
-			<div class="layout">
-				<div class="layout__main">
-				  <div class="tweet">
-					<div class="tweet__main">
-						<div class="tweet__header">
-							<div class="tweet_date" id="tweet_date"></div>
-							<div class="tweet_emotion" id="tweet_emotion"></div>
-							<div class="tweet_emotionValue" id="tweet_emotionValue"></div>
-						</div>
-						<div class="tweet_content" id="tweet_content"></div>
-					</div>
-				</div>
+					</td>
+				</table>
 			</div>
 			<div class="abc">
 				<a href="/logout">Logout</a>
 			</div>
-			<form class="user-card-form" id="getTwitterID" method="post" action="/update">
+			<div id="tweetDisplay"></div>
+			<!-- <form class="user-card-form" id="getTwitterID" method="post" action="/update">
 				<button type="submit" value="update" id="update">Update</button>
-			</form>
+			</form> -->
 			<p id="test"></p>
 		</div>
 	</body>

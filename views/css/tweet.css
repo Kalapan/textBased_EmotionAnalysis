@@ -28,11 +28,11 @@ html {
   text-decoration: underline;
 }
 
-.tweet__header {
+.tweet_header {
   display: flex;
 }
 
-.tweet__date {
+.tweet_date {
   font-size: 15px;
   font-weight: 700;
   color: #14171a;

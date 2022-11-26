@@ -48,3 +48,22 @@ body {
   'GRAD' 0,
   'opsz' 48
 }
+
+.chart {
+  margin-left: 2%;
+}
+
+.table_selection {
+  margin-left: 15%;
+}
+
+#tweetDisplay {
+  height: auto;
+  width: 650px;
+  background-color: red;
+  z-index: 3;
+  top: 17%;
+  left: 50%;
+  display: flex;
+  position: absolute;
+}
