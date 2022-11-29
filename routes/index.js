@@ -7,14 +7,15 @@ var dotenv = require('dotenv').config()
 
 let userName = "";
 let month = "01";
-var emotionHappiness = 0;
-var emotionDepression = 0;
-var emotionAnger = 0;
-var emotionAnxiety = 0;
-var emotionNeutral = 0;
-var emotionNeutral1 = 0;
-var HappinessDisplay = [];
-var Happiness = [];
+var emotionHappiness = 0, emotionDepression = 0, emotionAnger = 0, emotionAnxiety = 0, emotionNeutral = 0;
+var HappinessDisplay = [], depressionDisplay = [], angerDisplay = [], anxietyDisplay = [], neutralDisplay = [];
+var Happiness = [], depression = [], anger = [], anxiety = [], neutral = [];
+
+function resetVals() {
+	emotionHappiness = 0, emotionDepression = 0, emotionAnger = 0, emotionAnxiety = 0, emotionNeutral = 0;
+	HappinessDisplay = [], depressionDisplay = [], angerDisplay = [], anxietyDisplay = [], neutralDisplay = [];
+	Happiness = [], depression = [], anger = [], anxiety = [], neutral = [];
+}
 
 router.get('/', function (req, res, next) {
 	return res.render('index.ejs');
@@ -121,8 +122,7 @@ router.get('/logout', function (req, res, next) {
 			} else {
 				userName = "";
 				month = "01";
-				emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = emotionNeutral = 0;
-				HappinessDisplay = Happiness = [];
+				resetVals();
 				return res.redirect('/login');
 			}
 		});
@@ -168,9 +168,7 @@ router.post('/monthSelection', function (req, res, next) {
 			Value: 1
 		}).toArray(function(err, result) {
 		  if (err) throw err;
-		  	emotionHappiness = emotionDepression = emotionAnger = emotionAnxiety = emotionNeutral1 = emotionNeutral = 0;
-			HappinessDisplay = [];
-			Happiness = [];
+		  resetVals();
 			result.forEach(function(emotionType){
 				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion.includes("approval") || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
 					emotionHappiness += 1;
@@ -183,12 +181,10 @@ router.post('/monthSelection', function (req, res, next) {
 				} else if (emotionType.Emotion.includes("embarrassment") || emotionType.Emotion.includes("fear") || emotionType.Emotion.includes("nervousness")) {
 					emotionAnxiety += 1;
 				} else {
-					emotionNeutral1 += 1;
+					emotionNeutral += 1;
 				}
 			});
 			db.close();
-			emotionNeutral1 /= 2;
-			emotionNeutral = Math.trunc(emotionNeutral1);
 		});
 	});
 	setTimeout((() => {
