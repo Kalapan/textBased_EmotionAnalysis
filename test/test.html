@@ -55,5 +55,81 @@
   </body>
 </html>
 
-// let HappinessDisplay = '<%-HappinessDisplay%>';
-			// let HappDisplay = JSON.parse(HappinessDisplay);
+
+      let emotionHappiness = '<%-emotionHappiness%>';
+			let happDisplay = '<%-happinessDisplay%>';
+			let happinessDisplay = JSON.parse(happDisplay);
+			
+			let emotionAnger = '<%-emotionAnger%>';
+			// let angDisplay = '<%-angerDisplay%>';
+			// let angerDisplay = JSON.parse(angDisplay);
+
+			let emotionNeutral = '<%-emotionNeutral%>';
+			// let neutDisplay = '<%-neutralDisplay%>';
+			// let neutralDisplay = JSON.parse(neutDisplay);
+
+			let emotionDepression = '<%-emotionDepression%>';
+			// let depDisplay = '<%-depressionDisplay%>';
+			// let depressionDisplay = JSON.parse(depDisplay);
+
+			let emotionAnxiety = '<%-emotionAnxiety%>';
+			// let anxDisplay = JSON.parse('<%-anxietyDisplay%>');
+			// let anxietyDisplay = JSON.parse(anxDisplay);
+			let month = '<%-month%>';
+
+      
+let userName = "";
+let month = "01";
+var emotionHappiness = 0, emotionDepression = 0, emotionAnger = 0, emotionAnxiety = 0, emotionNeutral = 0;
+var happinessDisplay = [], depressionDisplay = [], angerDisplay = [], anxietyDisplay = [], neutralDisplay = [];
+var happiness = [], depression = [], anger = [], anxiety = [], neutral = [];
+
+function resetVals() {
+	userName = "";
+	month = "01";
+	emotionHappiness = 0, emotionDepression = 0, emotionAnger = 0, emotionAnxiety = 0, emotionNeutral = 0;
+	happinessDisplay = [], depressionDisplay = [], angerDisplay = [], anxietyDisplay = [], neutralDisplay = [];
+	happiness = [], depression = [], anger = [], anxiety = [], neutral = [];
+}
+
+function loadDisplayData(emotionType, emotionDisplay) {
+  for (var i = 0; i < emotionType; i++) {
+    let layoutTweetDateDiv = document.createElement('div');
+    layoutTweetDateDiv.classList.add('tweet_date');
+    let layoutTweetDateDivText = document.createTextNode(emotionDisplay[i].Date); 
+    layoutTweetDateDiv.appendChild(layoutTweetDateDivText);
+
+    let layoutTweetEmotionDiv = document.createElement('div');
+    layoutTweetEmotionDiv.classList.add('tweet_emotion');
+    let layoutTweetEmotionDivText = document.createTextNode(emotionDisplay[i].Emotion); 
+    layoutTweetEmotionDiv.appendChild(layoutTweetEmotionDivText);
+
+    let layoutTweetEmotionValueDiv = document.createElement('div');
+    layoutTweetEmotionValueDiv.classList.add('tweet_emotionValue');
+    let layoutTweetEmotionValueDivText = document.createTextNode(emotionDisplay[i].Value); 
+    layoutTweetEmotionValueDiv.appendChild(layoutTweetEmotionValueDivText);
+
+    let layoutTweetHeaderMainDiv = document.createElement('div');
+    layoutTweetHeaderMainDiv.classList.add('tweet_header');
+    layoutTweetHeaderMainDiv.appendChild(layoutTweetDateDiv);
+    layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionDiv);
+    layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionValueDiv);
+
+    let layoutTweetContentDiv = document.createElement('div');
+    layoutTweetContentDiv.classList.add('tweet_content');
+    let layoutTweetContentDivText = document.createTextNode(emotionDisplay[i].Tweet); 
+    layoutTweetContentDiv.appendChild(layoutTweetContentDivText);
+
+    let layoutTweetDiv = document.createElement('div');
+    layoutTweetDiv.classList.add('tweet');
+    layoutTweetDiv.appendChild(layoutTweetHeaderMainDiv);
+    layoutTweetDiv.appendChild(layoutTweetContentDiv);
+    
+    let layoutDiv = document.createElement('div');
+    layoutDiv.classList.add('layout');
+    layoutDiv.appendChild(layoutTweetDiv);
+    
+    let parent = document.querySelector('#tweetDisplay');
+    parent.appendChild(layoutDiv);
+  }
+}

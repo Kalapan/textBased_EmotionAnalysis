@@ -23,8 +23,8 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 # userID = str(sys.argv[1])
 userID = 'elonMusk'
 fromTag = "from:"
-startDate = "since:2022-03-29"
-endDate = "until:2022-03-30"
+startDate = "since:2022-03-01"
+endDate = "until:2022-04-01"
 query = fromTag + userID + " " + startDate + " " + endDate
 
 #set the column title which the tweets will be saved in

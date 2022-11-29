@@ -3,7 +3,6 @@
 	<head>
 		<title>Welcome</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="./css/main.css">
 		<link rel="stylesheet" href="./css/tweet.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -51,25 +50,23 @@
 				};
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
-				// var temp = "";
-				// for (var i = 0; i < emotionHappiness; i++) {
-				// 	temp += HappDisplay[i].Tweet;
-				// }
-				// document.getElementById("test").innerHTML = temp;
-				for (var i = 0; i < emotionHappiness; i++) {
+				loadDisplayData(emotionHappiness, HappDisplay);
+			}
+			function loadDisplayData(emotionType, emotionDisplay) {
+				for (var i = 0; i < emotionType; i++) {
 					let layoutTweetDateDiv = document.createElement('div');
 					layoutTweetDateDiv.classList.add('tweet_date');
-					let layoutTweetDateDivText = document.createTextNode(HappDisplay[i].Date); 
+					let layoutTweetDateDivText = document.createTextNode(emotionDisplay[i].Date); 
 					layoutTweetDateDiv.appendChild(layoutTweetDateDivText);
 
 					let layoutTweetEmotionDiv = document.createElement('div');
 					layoutTweetEmotionDiv.classList.add('tweet_emotion');
-					let layoutTweetEmotionDivText = document.createTextNode(HappDisplay[i].Emotion); 
+					let layoutTweetEmotionDivText = document.createTextNode(emotionDisplay[i].Emotion); 
 					layoutTweetEmotionDiv.appendChild(layoutTweetEmotionDivText);
 
 					let layoutTweetEmotionValueDiv = document.createElement('div');
 					layoutTweetEmotionValueDiv.classList.add('tweet_emotionValue');
-					let layoutTweetEmotionValueDivText = document.createTextNode(HappDisplay[i].Value); 
+					let layoutTweetEmotionValueDivText = document.createTextNode(emotionDisplay[i].Value); 
 					layoutTweetEmotionValueDiv.appendChild(layoutTweetEmotionValueDivText);
 
 					let layoutTweetHeaderMainDiv = document.createElement('div');
@@ -80,7 +77,7 @@
 
 					let layoutTweetContentDiv = document.createElement('div');
 					layoutTweetContentDiv.classList.add('tweet_content');
-					let layoutTweetContentDivText = document.createTextNode(HappDisplay[i].Tweet); 
+					let layoutTweetContentDivText = document.createTextNode(emotionDisplay[i].Tweet); 
 					layoutTweetContentDiv.appendChild(layoutTweetContentDivText);
 
 					let layoutTweetDiv = document.createElement('div');

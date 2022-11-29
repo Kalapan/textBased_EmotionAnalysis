@@ -5,27 +5,18 @@ html {
   display: grid;
   grid-template-columns: 275px auto 350px;
   margin: 0 auto;
-  max-width: 1200px;
-}
+  max-width: 1500px;
+} 
 .tweet {
   display: flex;
   border-bottom: 1px solid #e6ecf0;
   margin-bottom: 2px;
   padding: 10px 15px;
+  width: 450px;
 }
 
 .tweet:hover {
   background: rgba(0, 0, 0, 0.03);
-  cursor: pointer;
-}
-
-.tweet a {
-  color: #1b94e0;
-  text-decoration: none;
-}
-
-.tweet a:hover {
-  text-decoration: underline;
 }
 
 .tweet_header {
@@ -37,14 +28,89 @@ html {
   font-weight: 700;
   color: #14171a;
   margin-right: 5px;
+  width: 150px;
 }
 
 .tweet_emotion {
   color: #5b7083;
   font-size: 15px;
+  width: 100px;
 }
 
 .tweet_emotionValue {
-  margin-left: 5px;
+  margin-left: 50px;
   color: #657786;
+}
+.tweet_content {
+  margin-top: 8%;
+  margin-left: -45%;
+  width: 350px;
+}
+
+body {
+  background-color: #fcfcfc;
+  margin: 0;
+}
+
+.banner{
+  background-color: #78acff;
+}
+
+.banner_content{
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.banner_text{
+  display: inline;
+  color: white;
+  margin-left: 20px;
+  font-family: sans-serif;
+  font-size: large;
+  position: absolute;
+  top: 20px;
+}
+
+.username{
+  display: inline;
+}
+
+.banner_profile{
+ display: inline;
+}
+
+/*Circular crop on the profile image*/
+.profile_image{
+  display: inline;
+  object-fit: cover;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.material-symbols-outlined {
+  text-align: right;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+.chart {
+  margin-left: 2%;
+}
+
+.table_selection {
+  margin-left: 15%;
+}
+
+#tweetDisplay {
+  position: absolute;
+  overflow-y: auto;
+  height: 500px;
+  width: 500px;
+  z-index: 3;
+  top: 17%;
+  left: 50%;
 }
