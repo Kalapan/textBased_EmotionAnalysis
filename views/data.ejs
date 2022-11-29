@@ -17,11 +17,39 @@
 		<script type="text/javascript">
 			let emotionHappiness = '<%-emotionHappiness%>';
 			let HappinessDisplay = '<%-HappinessDisplay%>';
-			let HappDisplay = JSON.parse(HappinessDisplay);
+			let HappDisplay = "";
+			if (emotionHappiness > 0) {
+				HappDisplay = JSON.parse(HappinessDisplay);
+			}
+
 			let emotionAnger = '<%-emotionAnger%>';
+			let angerDisplay = '<%-angerDisplay%>';
+			let angDisplay = "";
+			if (emotionAnger > 0) {
+				angDisplay = JSON.parse(angerDisplay);
+			}
+
 			let emotionNeutral = '<%-emotionNeutral%>';
+			let neutralDisplay = '<%-neutralDisplay%>';
+			let neutDisplay = "";
+			if (emotionNeutral > 0) {
+				neutDisplay = JSON.parse(neutralDisplay);
+			}
+
 			let emotionDepression = '<%-emotionDepression%>';
+			let depressionDisplay = '<%-depressionDisplay%>';
+			let depDisplay = "";
+			if(emotionDepression > 0 ) {
+				depDisplay = JSON.parse(depressionDisplay);
+			}
+
 			let emotionAnxiety = '<%-emotionAnxiety%>';
+			let anxietyDisplay = '<%-anxietyDisplay%>';
+			let anxDisplay = "";
+			if(emotionAnxiety > 0 ) {
+				anxDisplay = JSON.parse(anxietyDisplay);
+			}
+
 			let month = '<%-month%>';
 			//Creating the donut chart:
 			google.charts.load("current", {packages:["corechart"]});
@@ -51,6 +79,10 @@
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
 				loadDisplayData(emotionHappiness, HappDisplay);
+				loadDisplayData(emotionDepression, depDisplay);
+				loadDisplayData(emotionAnger, angDisplay);
+				loadDisplayData(emotionAnxiety, anxDisplay);
+				loadDisplayData(emotionNeutral, neutDisplay);
 			}
 			function loadDisplayData(emotionType, emotionDisplay) {
 				for (var i = 0; i < emotionType; i++) {

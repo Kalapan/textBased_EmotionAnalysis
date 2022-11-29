@@ -106,9 +106,13 @@ router.get('/profile', function (req, res, next) {
 				emotionHappiness: emotionHappiness,
 				HappinessDisplay: HappinessDisplay,
 				emotionDepression: emotionDepression, 
-				emotionAnger: emotionAnger, 
+				depressionDisplay: depressionDisplay,
+				emotionAnger: emotionAnger,
+				angerDisplay: angerDisplay, 
 				emotionAnxiety: emotionAnxiety, 
-				emotionNeutral: emotionNeutral});
+				anxietyDisplay: anxietyDisplay,
+				emotionNeutral: emotionNeutral,
+				neutralDisplay: neutralDisplay});
 		}
 	});
 });
@@ -176,12 +180,20 @@ router.post('/monthSelection', function (req, res, next) {
 					HappinessDisplay = JSON.stringify(Happiness);
 				} else if (emotionType.Emotion.includes("grief") || emotionType.Emotion.includes("remorse") || emotionType.Emotion.includes("sadness")) {
 					emotionDepression += 1;
+					depression.push(emotionType);
+					depressionDisplay = JSON.stringify(depression);
 				} else if (emotionType.Emotion.includes("anger") || emotionType.Emotion.includes("annoyance") || emotionType.Emotion.includes("disappointment") || emotionType.Emotion.includes("disapproval") || emotionType.Emotion.includes("disgust")) {
 					emotionAnger += 1;
+					anger.push(emotionType);
+					angerDisplay = JSON.stringify(anger);
 				} else if (emotionType.Emotion.includes("embarrassment") || emotionType.Emotion.includes("fear") || emotionType.Emotion.includes("nervousness")) {
 					emotionAnxiety += 1;
+					anxiety.push(emotionType);
+					anxietyDisplay = JSON.stringify(anxiety);
 				} else {
 					emotionNeutral += 1;
+					neutral.push(emotionType);
+					neutralDisplay = JSON.stringify(neutral);
 				}
 			});
 			db.close();
