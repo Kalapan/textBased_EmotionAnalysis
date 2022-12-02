@@ -65,19 +65,21 @@
 				]);
 
 				var options = {
-				title: 'Emotion Score Based on Tweets',
-				pieHole: 0.4,
-				backgroundColor: 'transparent',
-				slices: {
-					0: { color: 'gold' },
-					1: { color: 'blue' },
-					2: { color: 'red' },
-					3: { color: 'purple' },
-					4: { color: 'green' }
-				}
+					title: 'Emotion Score Based on Tweets',
+					pieHole: 0.4,
+					backgroundColor: 'transparent',
+					slices: {
+						0: { color: 'gold' },
+						1: { color: 'blue' },
+						2: { color: 'red' },
+						3: { color: 'purple' },
+						4: { color: 'green' }
+					}
 				};
+				
 				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 				chart.draw(data, options);
+
 				loadDisplayData(emotionHappiness, HappDisplay);
 				loadDisplayData(emotionDepression, depDisplay);
 				loadDisplayData(emotionAnger, angDisplay);

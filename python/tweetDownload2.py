@@ -21,20 +21,20 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 
 #assign the users twitter id to userID
 # userID = str(sys.argv[1])
-userID = 'elonMusk'
+userID = 'JoeBiden'
 fromTag = "from:"
-startDate = "since:2022-03-01"
-endDate = "until:2022-04-01"
+startDate = "since:2022-11-01"
+endDate = "until:2022-12-01"
 query = fromTag + userID + " " + startDate + " " + endDate
 
 #set the column title which the tweets will be saved in
 columns = ['Twitter_ID','Date', 'Month', 'Time', 'Tweet', 'Emotion', 'Value']
 #make an array to hold the data
 data = []
-
+counter = 0;
 # Using TwitterSearchScraper to scrape data and append tweets to list
 for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-    if i>20:
+    if i>10:
         break
     #assign which model to use
     emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
@@ -46,7 +46,7 @@ for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
     emotionType = emotionOutput.get('label')
     #get the emotion value and round to 2 decimal places
     emotionScore = round(emotionOutput.get('score'), 2)
-
+    counter += 1
     # get the tweet date
     tweetDate = tweet.date.strftime("%m-%d-%Y")
     # get the tweet month
@@ -54,7 +54,7 @@ for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
     # get the tweet time
     tweetTime = tweet.date.strftime("%H:%M:%S")
     #remove line break
-    tweet = tweet.content.replace("\n", "")
+    tweet = tweet.content.replace("\n", "").replace("'", "").replace('"', '')
 
     # add all the data to an array
     data.append([userID, tweetDate, tweetMonth, tweetTime, tweet, emotionType, emotionScore])
@@ -66,4 +66,7 @@ df = pd.DataFrame(data, columns = columns)
 data = df.to_dict(orient = "records")
 
 # send the dictionary to mongodb
-tweets_collection.insert_many(data)
+# tweets_collection.insert_many(data)
+
+print(counter)
+print(df)

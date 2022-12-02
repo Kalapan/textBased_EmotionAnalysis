@@ -201,7 +201,7 @@ router.post('/monthSelection', function (req, res, next) {
 	});
 	setTimeout((() => {
 		return res.redirect('/profile');
-	  }), 1000)
+	  }), 1500)
 });
 
 router.get('/forgetpass', function (req, res, next) {
