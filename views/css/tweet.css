@@ -1,12 +1,3 @@
-html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
-}
-.layout {
-  display: grid;
-  grid-template-columns: 275px auto 350px;
-  margin: 0 auto;
-  max-width: 1500px;
-} 
 .tweet {
   display: flex;
   border-bottom: 1px solid #e6ecf0;
@@ -52,65 +43,12 @@ body {
   margin: 0;
 }
 
-.banner{
-  background-color: #78acff;
-}
-
-.banner_content{
-  padding: 10px;
-  margin-left: 20px;
-}
-
-.banner_text{
-  display: inline;
-  color: white;
-  margin-left: 20px;
-  font-family: sans-serif;
-  font-size: large;
-  position: absolute;
-  top: 20px;
-}
-
-.username{
-  display: inline;
-}
-
-.banner_profile{
- display: inline;
-}
-
-/*Circular crop on the profile image*/
-.profile_image{
-  display: inline;
-  object-fit: cover;
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
-}
-
-.material-symbols-outlined {
-  text-align: right;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
-
-.chart {
-  margin-left: 2%;
-}
-
-.table_selection {
-  margin-left: 15%;
-}
-
 #tweetDisplay {
   position: absolute;
   overflow-y: auto;
   height: 500px;
   width: 500px;
   z-index: 3;
-  top: 17%;
-  left: 50%;
+  top: 13%;
+  margin-left: 3%;
 }

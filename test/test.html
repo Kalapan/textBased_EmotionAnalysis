@@ -1,4 +1,4 @@
-function selectHandler() {
+<!-- function selectHandler() {
   var selectedItem = chart.getSelection()[0];
   if (selectedItem) {
     var emotionSelected = data.getValue(selectedItem.row, 0);
@@ -10,4 +10,25 @@ function selectHandler() {
 
 var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
 google.visualization.events.addListener(chart, 'select', selectHandler);  
-chart.draw(data, options);
+chart.draw(data, options); -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome</title>
+		<link rel="stylesheet" href="test.css" />
+	</head>
+	<body>
+    <header class="nav_header">
+      <img class="logo" src = "../views/loginLogo.png" style="width:50px;height:50px;">
+      <nav>
+        <ul class="nav_tabs">
+          <li><a href="#">About Site</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Settings</a></li>
+        </ul>
+      </nav>
+      <a class="cta" href="#"><button>Logout</button></a>
+    </header>
+			
+	</body>
+</html>

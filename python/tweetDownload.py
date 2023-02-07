@@ -25,8 +25,8 @@ tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBERTa")
 
 #assign the users twitter id to userID
-# userID = str(sys.argv[1])
-userID = 'elonMusk'
+userID = str(sys.argv[1])
+# userID = 'elonMusk'
 
 #parameters set to get the tweets
 tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = False, exclude_replies = True, tweet_mode = 'extended')
@@ -37,7 +37,7 @@ columns = ['Twitter_ID','Date', 'Time', 'Tweet', 'Emotion', 'Value']
 data = []
 
 #get the latest tweet and format
-for info in tweets [:42]:
+for info in tweets [:5]:
     #assign which model to use
     emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
     #get the emotion of the tweet
