@@ -87,7 +87,49 @@
 				loadDisplayData(emotionAnger, angDisplay);
 				loadDisplayData(emotionAnxiety, anxDisplay);
 				loadDisplayData(emotionNeutral, neutDisplay);
+
+				function selectHandler() {
+				var selectedItem = chart.getSelection()[0];
+					if (selectedItem) {
+						var emotionSelected = data.getValue(selectedItem.row, 0);
+						if (emotionSelected.includes("Happiness")) {
+							updateTweetDisplay();
+							loadDisplayData(emotionHappiness, HappDisplay);
+						}
+						if (emotionSelected.includes("Depression")) {
+							updateTweetDisplay();
+							loadDisplayData(emotionDepression, depDisplay);
+						}
+						if (emotionSelected.includes("Anger")) {
+							updateTweetDisplay();
+							loadDisplayData(emotionAnger, angDisplay);
+						}
+						if (emotionSelected.includes("Anxiety")) {
+							updateTweetDisplay();
+							loadDisplayData(emotionAnxiety, anxDisplay);
+						}
+						if (emotionSelected.includes("Neutral")) {
+							updateTweetDisplay();
+							loadDisplayData(emotionNeutral, neutDisplay);
+						}
+					}
+				}
+
+				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
+				google.visualization.events.addListener(chart, 'select', selectHandler);  
+				chart.draw(data, options);
 			}
+
+			function updateTweetDisplay() {
+				var elem = document.getElementById("tweetDisplay");
+  				elem.parentNode.removeChild(elem);
+
+				newHolder = document.createElement('div');
+				newHolder.setAttribute("id", "tweetDisplay");
+				let parent = document.querySelector('.tweetDisplay-card');
+				parent.appendChild(newHolder);
+			}
+
 			function loadDisplayData(emotionType, emotionDisplay) {
 				for (var i = 0; i < emotionType; i++) {
 					let layoutTweetDateDiv = document.createElement('div');
@@ -129,6 +171,7 @@
 					parent.appendChild(layoutDiv);
 				}
 			}
+
 			function getMonth(){
 				document.getElementById("donut_select").value = month;
 			}
@@ -175,10 +218,9 @@
 			<div class="tweetDisplay-card">
 				<div id="tweetDisplay"></div>
 			</div>
-			<form class="user-card-form" id="getTwitterID" method="post" action="/update">
+			<form id="getTwitterID" method="post" action="/update">
 				<button type="submit" value="update" id="update">Update</button>
 			</form>
-			<p id="test"></p>
 		</div>
 	</body>
 </html>

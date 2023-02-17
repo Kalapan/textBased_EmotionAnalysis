@@ -5,6 +5,7 @@ import pandas as pd
 from pymongo import MongoClient
 from transformers import RobertaTokenizerFast, TFRobertaForSequenceClassification, pipeline
 import sys
+import unittest
 
 #show which env file the credentials are stored in
 config = dotenv_values(".env")
@@ -25,8 +26,8 @@ tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBERTa")
 
 #assign the users twitter id to userID
-userID = str(sys.argv[1])
-# userID = 'elonMusk'
+# userID = str(sys.argv[1])
+userID = 'JoeBiden'
 
 #parameters set to get the tweets
 tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = False, exclude_replies = True, tweet_mode = 'extended')
@@ -35,11 +36,13 @@ tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = Fals
 columns = ['Twitter_ID','Date', 'Time', 'Tweet', 'Emotion', 'Value']
 #make an array to hold the data
 data = []
+tweetTextTest = ''
 
 #get the latest tweet and format
-for info in tweets [:5]:
+for info in tweets [:1]:
     #assign which model to use
     emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
+    tweetTextTest = info.full_text
     #get the emotion of the tweet
     emotion_labels = emotion(info.full_text)
     #convert the list to a dictionary
@@ -70,9 +73,56 @@ for info in tweets [:5]:
 # convert data into a dataframe
 df = pd.DataFrame(data, columns = columns)
 
-print(df)
-# # make the dataframe a dictionary
-# data = df.to_dict(orient = "records")
+# make the dataframe a dictionary
+data = df.to_dict(orient = "records")
+
+print(data)
 
 # # send the dictionary to mongodb
 # tweets_collection.insert_many(data)
+
+# check if userid has a value
+# class TestTextVariable(unittest.TestCase):
+#     def setUp(self):
+#         self.variable = userID
+
+#     def test_text_variable(self):
+#         self.assertIsNotNone(self.variable, 'Variable does not have a value!')
+#         print("UserID exists")
+
+# test if connection to mongodb is established
+# class TestMongoDBConnection(unittest.TestCase):
+#     def test_connection(self):
+#         client = MongoClient(config["MongoLogIn"])
+#         self.assertTrue(client.server_info())
+#         print('Database connection successful')
+
+# test if data output is a list
+# class TestDictionary(unittest.TestCase):
+#     def test_get_dictionary(self):
+#         result = data
+#         self.assertIsInstance(result, list)
+#         print('Output of python script is list')
+
+# test if tweet is pulled from twitter api and if the tweet is a string
+# class TestTwitterAPI(unittest.TestCase):
+#     def test_tweet_retrieval(self):
+#         self.assertGreater(len(tweetTextTest), 0)
+#         print("A tweet was retrieved using Twitter API.")
+#         self.assertIsInstance(tweetTextTest, str)
+#         print("The tweet is a string.")
+
+# test if the analyzed tweets are added to the mongodb database
+# class TestMongoDBInsertion(unittest.TestCase):
+#     def setUp(self):
+#         self.client = MongoClient(config["MongoLogIn"])
+#         self.db = self.client['User']
+#         self.collection = self.db['tweets_information']
+
+#     def test_data_insertion(self):
+#         result = self.collection.insert_many(data)
+#         self.assertTrue(result.acknowledged, 'Data insertion failed!')
+#         print("Tweets are inserted successfully")
+
+if __name__ == '__main__':
+    unittest.main()
