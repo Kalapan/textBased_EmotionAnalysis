@@ -24,6 +24,8 @@ api = tweepy.API(authenticate)
 #required to make the text analyzer know where to get required model and architecture
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBERTa")
+#assign which model to use
+emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
 #assign the users twitter id to userID
 # userID = str(sys.argv[1])
@@ -39,9 +41,7 @@ data = []
 tweetTextTest = ''
 
 #get the latest tweet and format
-for info in tweets [:1]:
-    #assign which model to use
-    emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
+for info in tweets [:2]:
     tweetTextTest = info.full_text
     #get the emotion of the tweet
     emotion_labels = emotion(info.full_text)
@@ -57,30 +57,25 @@ for info in tweets [:1]:
     # get the tweet time
     tweetTime = info.created_at.strftime("%H:%M:%S")
 
-    # add all the data to an array
-    data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
+    # check if the tweet already exists in database
+    item_details = tweets_collection.find_one({
+        "Tweet": info.full_text,
+    })
+    # if tweet does not exist in database
+    if item_details is None:
+        # add all the data to an array
+        data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
+        # convert data into a dataframe
+        df = pd.DataFrame(data, columns = columns)
+        # make the dataframe a dictionary
+        data = df.to_dict(orient = "records")
+        # send the dictionary to mongodb
+        tweets_collection.insert_many(data)
+        print("Data inserted into the database.")
+    else:
+        print("Data already exists in the database.")
 
-    # # check if the tweet already exists in database
-    # item_details = tweets_collection.find()
-    # for item in item_details:
-    #     if item['Tweet'] == info.full_text :
-    #         # if it exists fail
-    #         print('tweet already exists')
-    #     else :
-    #         #add the tweets info to a variable
-    #         data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
-
-# convert data into a dataframe
-df = pd.DataFrame(data, columns = columns)
-
-# make the dataframe a dictionary
-data = df.to_dict(orient = "records")
-
-print(data)
-
-# # send the dictionary to mongodb
-# tweets_collection.insert_many(data)
-
+#Tests
 # check if userid has a value
 # class TestTextVariable(unittest.TestCase):
 #     def setUp(self):
@@ -124,5 +119,5 @@ print(data)
 #         self.assertTrue(result.acknowledged, 'Data insertion failed!')
 #         print("Tweets are inserted successfully")
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
