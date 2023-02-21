@@ -41,7 +41,7 @@ data = []
 tweetTextTest = ''
 
 #get the latest tweet and format
-for info in tweets [:2]:
+for info in tweets [:40]:
     tweetTextTest = info.full_text
     #get the emotion of the tweet
     emotion_labels = emotion(info.full_text)
@@ -65,15 +65,16 @@ for info in tweets [:2]:
     if item_details is None:
         # add all the data to an array
         data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
-        # convert data into a dataframe
-        df = pd.DataFrame(data, columns = columns)
-        # make the dataframe a dictionary
-        data = df.to_dict(orient = "records")
-        # send the dictionary to mongodb
-        tweets_collection.insert_many(data)
         print("Data inserted into the database.")
     else:
         print("Data already exists in the database.")
+
+# convert data into a dataframe
+df = pd.DataFrame(data, columns = columns)
+# make the dataframe a dictionary
+data = df.to_dict(orient = "records")
+# send the dictionary to mongodb
+tweets_collection.insert_many(data)
 
 #Tests
 # check if userid has a value
