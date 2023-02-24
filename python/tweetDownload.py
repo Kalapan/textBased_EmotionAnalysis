@@ -35,13 +35,14 @@ userID = 'JoeBiden'
 tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = False, exclude_replies = True, tweet_mode = 'extended')
 
 #set the column title which the tweets will be saved in
-columns = ['Twitter_ID','Date', 'Time', 'Tweet', 'Emotion', 'Value']
+columns = ['Twitter_ID','Date', 'Month', 'Time', 'Tweet', 'Emotion', 'Value']
 #make an array to hold the data
 data = []
 tweetTextTest = ''
+dataExists = 0
 
 #get the latest tweet and format
-for info in tweets [:40]:
+for info in tweets [:5]:
     tweetTextTest = info.full_text
     #get the emotion of the tweet
     emotion_labels = emotion(info.full_text)
@@ -54,27 +55,34 @@ for info in tweets [:40]:
 
     # get the tweet date
     tweetDate = info.created_at.strftime("%m-%d-%Y")
+    # get the tweet month
+    tweetMonth = info.created_at.strftime("%m")
     # get the tweet time
     tweetTime = info.created_at.strftime("%H:%M:%S")
+    #remove line break
+    tweet = info.full_text.replace("\n", "").replace("'", "").replace('"', '')
 
     # check if the tweet already exists in database
     item_details = tweets_collection.find_one({
-        "Tweet": info.full_text,
+        "Tweet": tweet,
     })
     # if tweet does not exist in database
     if item_details is None:
         # add all the data to an array
-        data.append([userID, tweetDate, tweetTime, info.full_text, emotionType, emotionScore])
+        data.append([userID, tweetDate, tweetMonth, tweetTime, tweet, emotionType, emotionScore])
+        dataExists = 1
         print("Data inserted into the database.")
     else:
         print("Data already exists in the database.")
+        break
 
 # convert data into a dataframe
 df = pd.DataFrame(data, columns = columns)
 # make the dataframe a dictionary
 data = df.to_dict(orient = "records")
-# send the dictionary to mongodb
-tweets_collection.insert_many(data)
+if dataExists == 1:
+    # send the dictionary to mongodb
+    tweets_collection.insert_many(data)
 
 #Tests
 # check if userid has a value

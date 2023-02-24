@@ -5,8 +5,10 @@ const {spawn} = require('child_process');
 const e = require('express');
 var dotenv = require('dotenv').config()
 
+let date_ob = new Date();
 let userName = "";
-let month = "01";
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+let year = date_ob.getFullYear();
 var emotionHappiness = 0, emotionDepression = 0, emotionAnger = 0, emotionAnxiety = 0, emotionNeutral = 0;
 var HappinessDisplay = [], depressionDisplay = [], angerDisplay = [], anxietyDisplay = [], neutralDisplay = [];
 var Happiness = [], depression = [], anger = [], anxiety = [], neutral = [];
@@ -103,6 +105,7 @@ router.get('/profile', function (req, res, next) {
 			return res.render('data.ejs', {
 				name:userName.twitter_id,
 				month: month,
+				year: year,
 				emotionHappiness: emotionHappiness,
 				HappinessDisplay: HappinessDisplay,
 				emotionDepression: emotionDepression, 
@@ -125,7 +128,8 @@ router.get('/logout', function (req, res, next) {
 				return next(err);
 			} else {
 				userName = "";
-				month = "01";
+				month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+				year = date_ob.getFullYear();
 				resetVals();
 				return res.redirect('/login');
 			}
@@ -152,8 +156,10 @@ router.post('/update', function (req, res, next) {
 
 router.post('/monthSelection', function (req, res, next) {
 	console.log("monthSelection")
-	month = req.body.donut_select;
-	console.log(req.body.donut_select);
+	month = req.body.month_select;
+	year = req.body.year_select;
+	console.log(req.body.month_select);
+	console.log(req.body.year_select);
 	var MongoClient = require('mongodb').MongoClient;
 	var url = process.env.MongoLogIn;
 	MongoClient.connect(url, function(err, db) {
@@ -162,6 +168,7 @@ router.post('/monthSelection', function (req, res, next) {
 		dbo.collection("tweets_information").find({
 			Twitter_ID: userName.twitter_id,
 			Month: month,
+			Year: year,
 		}).project({
 			_id: 0,
 			Twitter_ID: 1,

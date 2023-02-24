@@ -18,55 +18,67 @@ tweets_collection = db.tweets_information
 #required to make the text analyzer know where to get required model and architecture
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBERTa")
+#assign which model to use
+emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
-#assign the users twitter id to userID
-# userID = str(sys.argv[1])
-userID = 'JoeBiden'
-fromTag = "from:"
-startDate = "since:2022-11-01"
-endDate = "until:2022-12-01"
-query = fromTag + userID + " " + startDate + " " + endDate
+def pullAnalyzeTweet(startDate, endDate):
+    #assign the users twitter id to userID
+    # userID = str(sys.argv[1])
+    userID = 'JoeBiden'
+    fromTag = "from:"
+    startD = "since:" + startDate
+    endD = "until:" + endDate
+    query = fromTag + userID + " " + startD + " " + endD
+    dataExists = 0
+    #set the column title which the tweets will be saved in
+    columns = ['Twitter_ID','Date', 'Month', 'Year', 'Time', 'Tweet', 'Emotion', 'Value']
+    #make an array to hold the data
+    data = []
+    # Using TwitterSearchScraper to scrape data and append tweets to list
+    for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
+        if i>10:
+            break
+        #get the emotion of the tweet
+        emotion_labels = emotion(tweet.content)
+        #convert the list to a dictionary
+        emotionOutput = emotion_labels[0]
+        #get the emotion type and assign to a variable
+        emotionType = emotionOutput.get('label')
+        #get the emotion value and round to 2 decimal places
+        emotionScore = round(emotionOutput.get('score'), 2)
+        # get the tweet date
+        tweetDate = tweet.date.strftime("%m-%d-%Y")
+        # get the tweet month
+        tweetMonth = tweet.date.strftime("%m")
+        tweetYear = tweet.date.strftime("%Y")
+        # get the tweet time
+        tweetTime = tweet.date.strftime("%H:%M:%S")
+        #remove line break
+        tweet = tweet.content.replace("\n", "").replace("'", "").replace('"', '')
 
-#set the column title which the tweets will be saved in
-columns = ['Twitter_ID','Date', 'Month', 'Time', 'Tweet', 'Emotion', 'Value']
-#make an array to hold the data
-data = []
-counter = 0;
-# Using TwitterSearchScraper to scrape data and append tweets to list
-for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-    if i>10:
-        break
-    #assign which model to use
-    emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
-    #get the emotion of the tweet
-    emotion_labels = emotion(tweet.content)
-    #convert the list to a dictionary
-    emotionOutput = emotion_labels[0]
-    #get the emotion type and assign to a variable
-    emotionType = emotionOutput.get('label')
-    #get the emotion value and round to 2 decimal places
-    emotionScore = round(emotionOutput.get('score'), 2)
-    counter += 1
-    # get the tweet date
-    tweetDate = tweet.date.strftime("%m-%d-%Y")
-    # get the tweet month
-    tweetMonth = tweet.date.strftime("%m")
-    # get the tweet time
-    tweetTime = tweet.date.strftime("%H:%M:%S")
-    #remove line break
-    tweet = tweet.content.replace("\n", "").replace("'", "").replace('"', '')
+        # check if the tweet already exists in database
+        item_details = tweets_collection.find_one({
+            "Tweet": tweet,
+        })
+        # if tweet does not exist in database
+        if item_details is None:
+            # add all the data to an array
+            data.append([userID, tweetDate, tweetMonth, tweetYear, tweetTime, tweet, emotionType, emotionScore])
+            dataExists = 1
+            print("Data inserted into the database.")
+        else:
+            print("Data already exists in the database.")
+            break
 
-    # add all the data to an array
-    data.append([userID, tweetDate, tweetMonth, tweetTime, tweet, emotionType, emotionScore])
+    # convert data into a dataframe
+    df = pd.DataFrame(data, columns = columns)
+    # make the dataframe a dictionary
+    data = df.to_dict(orient = "records")
+    if dataExists == 1:
+        # send the dictionary to mongodb
+        tweets_collection.insert_many(data)
 
-# convert data into a dataframe
-df = pd.DataFrame(data, columns = columns)
-
-# make the dataframe a dictionary
-data = df.to_dict(orient = "records")
-
-# send the dictionary to mongodb
-# tweets_collection.insert_many(data)
-
-print(counter)
-print(df)
+pullAnalyzeTweet("2022-02-01", "2022-03-01")
+pullAnalyzeTweet("2022-03-01", "2022-04-01")
+pullAnalyzeTweet("2022-04-01", "2022-05-01")
+pullAnalyzeTweet("2022-05-01", "2022-06-01")

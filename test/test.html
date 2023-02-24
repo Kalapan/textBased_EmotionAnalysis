@@ -18,17 +18,22 @@ chart.draw(data, options); -->
 		<link rel="stylesheet" href="test.css" />
 	</head>
 	<body>
-    <header class="nav_header">
-      <img class="logo" src = "../views/loginLogo.png" style="width:50px;height:50px;">
-      <nav>
-        <ul class="nav_tabs">
-          <li><a href="#">About Site</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Settings</a></li>
-        </ul>
-      </nav>
-      <a class="cta" href="#"><button>Logout</button></a>
-    </header>
+    <form>
+      <label>
+        Choose your preferred party date (required, April 1st to 20th):
+        <input
+          type="date"
+          name="party"
+          min="2020-01-01"
+          max="2023-01-20"
+          required />
+        <span class="validity"></span>
+      </label>
+    
+      <p>
+        <button>Submit</button>
+      </p>
+    </form>
 			
 	</body>
 </html>

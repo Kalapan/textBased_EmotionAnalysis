@@ -10,6 +10,7 @@ def query(payload):
 emotionLabels = query({
 	"inputs": "We were disappointed that they couldn't go.",
 })
+print(emotionLabels)
 
 # strEmotionLabels = str(emotionLabels)
 # strFormat = strEmotionLabels[3:-1492]
@@ -24,7 +25,6 @@ emotionLabels = query({
 # emotionValue = emotionValue[8:]
 
 # print(emotionType)
-print(emotionLabels)
 # print(type(emotion_labels))
 # emotionOutput = dict(emotion_labels[0])
 # print(emotionOutput)
@@ -36,3 +36,29 @@ print(emotionLabels)
 # strRem = strOutput[1:-1]
 
 # print(strRem)
+
+# import snscrape.modules.twitter as sntwitter
+# import pandas as pd
+
+# query = "(from:elonmusk) until:2020-01-01 since:2010-01-01"
+# tweets = []
+# limit = 10
+
+
+# for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+    
+#     # print(vars(tweet))
+#     # break
+#     if len(tweets) == limit:
+#         break
+#     else:
+#         tweets.append([tweet.date, tweet.username, tweet.content])
+        
+# df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
+# print(df)
+
+# snscrape --jsonl --progress --max-results 500 --since 2023-02-22 twitter-search "from:elonMusk until:2023-02-24" > text-query-tweets.json
+
+# import os
+
+# os.system('snscrape --jsonl --progress --max-results 500 --since 2023-02-22 twitter-search "from:elonMusk until:2023-02-24" > text-query-tweets.json')
