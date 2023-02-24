@@ -21,10 +21,14 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 #assign which model to use
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
+#assign the users twitter id to userID
+userID = str(sys.argv[1])
+autoMonthStart = str(sys.argv[2])
+autoMonthInt = int(sys.argv[2]) + 1
+autoMonthEnd = str(autoMonthInt)
+
 def pullAnalyzeTweet(startDate, endDate):
-    #assign the users twitter id to userID
-    # userID = str(sys.argv[1])
-    userID = 'JoeBiden'
+    # userID = 'JoeBiden'
     fromTag = "from:"
     startD = "since:" + startDate
     endD = "until:" + endDate
@@ -78,7 +82,7 @@ def pullAnalyzeTweet(startDate, endDate):
         # send the dictionary to mongodb
         tweets_collection.insert_many(data)
 
-pullAnalyzeTweet("2022-02-01", "2022-03-01")
-pullAnalyzeTweet("2022-03-01", "2022-04-01")
-pullAnalyzeTweet("2022-04-01", "2022-05-01")
-pullAnalyzeTweet("2022-05-01", "2022-06-01")
+if autoMonthInt != 13:
+    pullAnalyzeTweet("2022-" + autoMonthStart + "-01", "2022-" + autoMonthEnd + "-01")
+else:
+    pullAnalyzeTweet("2022-12-01", "2022-12-31")

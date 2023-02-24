@@ -140,18 +140,34 @@ router.get('/logout', function (req, res, next) {
 router.post('/update', function (req, res, next) {
 	console.log("update")
 
-	const childPython = spawn('python', ['python/tweetDownload.py', userName.twitter_id]);
+	// const childPython = spawn('python', ['python/tweetDownload.py', userName.twitter_id]);
 
-	childPython.stdout.on('data', (data) => {
-		console.log(`${data}`);
-	});
-	childPython.stderr.on('data', (data) => {
-		console.log(`stderr: ${data}`);
-	});
-	childPython.on('close', (code) => {
-		console.log(`child process exited with code ${code}`);
-		return res.redirect('/profile');
-	});
+	// childPython.stdout.on('data', (data) => {
+	// 	console.log(`${data}`);
+	// });
+	// childPython.stderr.on('data', (data) => {
+	// 	console.log(`stderr: ${data}`);
+	// });
+	// childPython.on('close', (code) => {
+	// 	console.log(`child process exited with code ${code}`);
+	// 	return res.redirect('/profile');
+	// });
+	for (let i = 1; i <= 4; i++) {
+		const args = ("0" + (i)).slice(-2);
+		const childPython = spawn('python', ['python/tweetDownload2.py', userName.twitter_id, args]);
+	  
+		childPython.stdout.on('data', (data) => {
+		  console.log(`stdout ${i}: ${data}`);
+		});
+	  
+		childPython.stderr.on('data', (data) => {
+		  console.error(`stderr ${i}: ${data}`);
+		});
+	  
+		childPython.on('close', (code) => {
+		  console.log(`child process ${i} exited with code ${code}`);
+		});
+	  }
 });
 
 router.post('/monthSelection', function (req, res, next) {
