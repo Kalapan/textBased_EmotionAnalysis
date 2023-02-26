@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="./css/tweet.css" />
 		<link rel="stylesheet" href="./css/navbar.css" />
 		<link rel="stylesheet" href="./css/main.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!--Referencing Google charts-->
@@ -180,54 +181,53 @@
 		</script>
 	</head>
 	<body onload="getMonth()">
-			<p class="username">@<%= name %></p>
-			<header class="nav_header">
-				<img class="logo" src = "loginLogo.png">
-				<nav>
-				  <ul class="nav_tabs">
+		<header class="nav_header">
+			<img class="logo" src = "loginLogo.png">
+			<nav>
+				<ul class="nav_tabs">
+					<li><p class="username">@<%= name %></p></li>
 					<li><a href="#">About Site</a></li>
 					<li><a href="#">About Us</a></li>
 					<li><a href="#">Settings</a></li>
-				  </ul>
-				</nav>
-				<a class="cta" href="/logout"><button class="header_button">Logout</button></a>
-			</header>
-			<div class="chart-card">
-				<div id="donut_chart" style="width: 700px; height: 500px;"></div>
-				<table class="table_selection">	
-					<td>
-						<div>Sort by:</div>
-						<form id="monthSelection" action="/monthSelection" method="post">
-							<select id="month_select" class="month_select" name="month_select">
-								<option value="01">January</option>
-								<option value="02">February</option>
-								<option value="03">March</option>
-								<option value="04">April</option>
-								<option value="05">May</option>
-								<option value="06">June</option>
-								<option value="07">July</option>
-								<option value="08">August</option>
-								<option value="09">September</option>
-								<option value="10">October</option>
-								<option value="11">November</option>
-								<option value="12">December</option>
-							</select>
-							<select id="year_select" class="year_select" name="year_select">
-								<option value="2023">2023</option>
-								<option value="2022">2022</option>
-								<option value="2021">2021</option>
-							</select>
-							<input type="submit" name="submit"/>
-						</form>
-					</td>
-				</table>
-			</div>
-			<div class="tweetDisplay-card">
-				<div id="tweetDisplay"></div>
-			</div>
-			<form id="getTwitterID" method="post" action="/update">
-				<button type="submit" value="update" id="update">Update</button>
-			</form>
+				</ul>
+			</nav>
+			<a class="cta" href="/logout"><button class="header_button">Logout</button></a>
+		</header>
+		<div class="chart-card">
+			<div id="donut_chart" style="width: 700px; height: 500px;"></div>
+			<table class="table_selection" id="table_selection">	
+				<td>
+					<div>Sort by:</div>
+					<form id="dateSelect" action="/dateSelect" method="post">
+						<select id="month_select" class="month_select" name="month_select">
+							<option value="01">January</option>
+							<option value="02">February</option>
+							<option value="03">March</option>
+							<option value="04">April</option>
+							<option value="05">May</option>
+							<option value="06">June</option>
+							<option value="07">July</option>
+							<option value="08">August</option>
+							<option value="09">September</option>
+							<option value="10">October</option>
+							<option value="11">November</option>
+							<option value="12">December</option>
+						</select>
+						<select id="year_select" class="year_select" name="year_select">
+							<option value="2023">2023</option>
+							<option value="2022">2022</option>
+							<option value="2021">2021</option>
+						</select>
+						<input type="submit" name="submit"/>
+					</form>
+				</td>
+			</table>
 		</div>
+		<div class="tweetDisplay-card">
+			<div id="tweetDisplay"></div>
+		</div>
+		<!-- <form id="getTwitterID" method="post" action="/update">
+			<button type="submit" value="update" id="update">Update</button>
+		</form> -->
 	</body>
 </html>

@@ -139,19 +139,6 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/update', function (req, res, next) {
 	console.log("update")
-
-	// const childPython = spawn('python', ['python/tweetDownload.py', userName.twitter_id]);
-
-	// childPython.stdout.on('data', (data) => {
-	// 	console.log(`${data}`);
-	// });
-	// childPython.stderr.on('data', (data) => {
-	// 	console.log(`stderr: ${data}`);
-	// });
-	// childPython.on('close', (code) => {
-	// 	console.log(`child process exited with code ${code}`);
-	// 	return res.redirect('/profile');
-	// });
 	for (let i = 1; i <= 4; i++) {
 		const args = ("0" + (i)).slice(-2);
 		const childPython = spawn('python', ['python/tweetDownload2.py', userName.twitter_id, args]);
@@ -170,8 +157,8 @@ router.post('/update', function (req, res, next) {
 	  }
 });
 
-router.post('/monthSelection', function (req, res, next) {
-	console.log("monthSelection")
+router.post('/dateSelect', function (req, res, next) {
+	console.log("dateSelect")
 	month = req.body.month_select;
 	year = req.body.year_select;
 	console.log(req.body.month_select);

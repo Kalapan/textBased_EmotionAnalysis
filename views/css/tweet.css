@@ -44,7 +44,6 @@ body {
 }
 
 #tweetDisplay {
-  position: absolute;
   overflow-y: auto;
   height: 500px;
   width: 500px;
