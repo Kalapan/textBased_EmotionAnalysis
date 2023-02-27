@@ -152,7 +152,7 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/update', function (req, res, next) {
 	console.log("update")
-	for (let i = 1; i <= 4; i++) {
+	for (let i = 1; i <= 5; i++) {
 		const args = ("0" + (i)).slice(-2);
 		const childPython = spawn('python', ['python/tweetDownload2.py', userName.twitter_id, args]);
 	  
