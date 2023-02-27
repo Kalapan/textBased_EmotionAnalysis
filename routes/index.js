@@ -35,14 +35,12 @@ router.post('/', function(req, res, next) {
 				if(!data){
 					var c;
 					User.findOne({},function(err,data){
-
 						if (data) {
 							console.log("if");
 							c = data.unique_id + 1;
 						}else{
 							c=1;
 						}
-
 						var newPerson = new User({
 							unique_id:c,
 							email:personInfo.email,
@@ -50,13 +48,28 @@ router.post('/', function(req, res, next) {
 							password: personInfo.password,
 							passwordConf: personInfo.passwordConf
 						});
-
 						newPerson.save(function(err, Person){
 							if(err)
 								console.log(err);
 							else
 								console.log('Success');
 						});
+						for (let i = 1; i <= 1; i++) {
+							const args = ("0" + (i)).slice(-2);
+							const childPython = spawn('python', ['python/tweetDownload2.py', personInfo.twitter_id, args]);
+						  
+							childPython.stdout.on('data', (data) => {
+							  console.log(`stdout ${i}: ${data}`);
+							});
+						  
+							childPython.stderr.on('data', (data) => {
+							  console.error(`stderr ${i}: ${data}`);
+							});
+						  
+							childPython.on('close', (code) => {
+							  console.log(`child process ${i} exited with code ${code}`);
+							});
+						  }
 					}).sort({_id: -1}).limit(1);
 					res.send({"Success":"You have been registered."});
 				}else{

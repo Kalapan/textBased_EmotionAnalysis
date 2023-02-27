@@ -28,8 +28,8 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
 #assign the users twitter id to userID
-# userID = str(sys.argv[1])
-userID = 'JoeBiden'
+userID = str(sys.argv[1])
+# userID = 'JoeBiden'
 
 #parameters set to get the tweets
 tweets = api.user_timeline(screen_name = userID, count = 200, include_rts = False, exclude_replies = True, tweet_mode = 'extended')
@@ -42,7 +42,7 @@ tweetTextTest = ''
 dataExists = 0
 
 #get the latest tweet and format
-for info in tweets [:5]:
+for info in tweets [:100]:
     tweetTextTest = info.full_text
     #get the emotion of the tweet
     emotion_labels = emotion(info.full_text)

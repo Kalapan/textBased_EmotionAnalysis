@@ -28,7 +28,6 @@ autoMonthInt = int(sys.argv[2]) + 1
 autoMonthEnd = str(autoMonthInt)
 
 def pullAnalyzeTweet(startDate, endDate):
-    # userID = 'JoeBiden'
     fromTag = "from:"
     startD = "since:" + startDate
     endD = "until:" + endDate
@@ -81,6 +80,11 @@ def pullAnalyzeTweet(startDate, endDate):
     if dataExists == 1:
         # send the dictionary to mongodb
         tweets_collection.insert_many(data)
+
+if autoMonthInt != 13:
+    pullAnalyzeTweet("2023-" + autoMonthStart + "-01", "2023-" + autoMonthEnd + "-01")
+else:
+    pullAnalyzeTweet("2023-12-01", "2023-12-31")
 
 if autoMonthInt != 13:
     pullAnalyzeTweet("2022-" + autoMonthStart + "-01", "2022-" + autoMonthEnd + "-01")
