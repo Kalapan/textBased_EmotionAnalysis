@@ -56,7 +56,7 @@ router.post('/', function(req, res, next) {
 						});
 						for (let i = 1; i <= 12; i++) {
 							const args = ("0" + (i)).slice(-2);
-							const childPython = spawn('python', ['python/tweetDownload2.py', personInfo.twitter_id, args]);
+							const childPython = spawn('python', ['tweetDownload2.py', personInfo.twitter_id, args]);
 						  
 							childPython.stdout.on('data', (data) => {
 							  console.log(`stdout ${i}: ${data}`);
