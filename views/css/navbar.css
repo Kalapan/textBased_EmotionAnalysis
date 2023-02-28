@@ -20,7 +20,7 @@ li, a {
     background-color: #24252A;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 10%;
+    padding: 10px 10%;
     z-index: 5;
     position: fixed;
     display: flex;

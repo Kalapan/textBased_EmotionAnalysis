@@ -56,7 +56,7 @@ router.post('/', function(req, res, next) {
 						});
 						for (let i = 1; i <= 1; i++) {
 							const args = ("0" + (i)).slice(-2);
-							const childPython = spawn('python', ['python/tweetDownload2.py', personInfo.twitter_id, args]);
+							const childPython = spawn('python', ['python/tweetDownload2.py', personInfo.twitter_id, args, process.env.MongoLogIn]);
 						  
 							childPython.stdout.on('data', (data) => {
 							  console.log(`stdout ${i}: ${data}`);
@@ -96,7 +96,6 @@ router.post('/login', function (req, res, next) {
 				req.session.userId = data.unique_id;
 				//console.log(req.session.userId);
 				res.send({"Success":"Success!"});
-				
 			}else{
 				res.send({"Success":"Wrong password!"});
 			}

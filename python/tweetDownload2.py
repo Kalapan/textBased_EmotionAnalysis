@@ -1,5 +1,5 @@
 from http import client
-from dotenv import dotenv_values, load_dotenv
+# from dotenv import dotenv_values, load_dotenv
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 from pymongo import MongoClient
@@ -7,9 +7,9 @@ from transformers import RobertaTokenizerFast, TFRobertaForSequenceClassificatio
 import sys
 
 #show which env file the credentials are stored in
-config = dotenv_values(".env")
+# config = dotenv_values(".env")
 #connect to the mongodb database
-client = MongoClient(config["MongoLogIn"])
+client = MongoClient(str(sys.argv[3]))
 #get database
 db = client.get_database('User')
 #get collection object in database

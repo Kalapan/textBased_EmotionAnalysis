@@ -75,6 +75,7 @@ for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
 	# if tweet does not exist in database
 # convert data into a dataframe
 df = pd.DataFrame(data, columns = columns)
+print(df)
 # make the dataframe a dictionary
 data = df.to_dict(orient = "records")
-tweets_collection.insert_many(data)
+# tweets_collection.insert_many(data)
