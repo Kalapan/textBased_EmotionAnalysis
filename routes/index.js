@@ -54,7 +54,7 @@ router.post('/', function(req, res, next) {
 							else
 								console.log('Success');
 						});
-						for (let i = 1; i <= 1; i++) {
+						for (let i = 1; i <= 12; i++) {
 							const args = ("0" + (i)).slice(-2);
 							const childPython = spawn('python', ['python/tweetDownload2.py', personInfo.twitter_id, args]);
 						  
