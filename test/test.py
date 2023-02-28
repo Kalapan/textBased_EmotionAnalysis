@@ -11,6 +11,7 @@
 # 	"inputs": "i love you",
 # })
 # print(output[0][0])
+# "node": "14.17.6"
 from http import client
 from dotenv import dotenv_values, load_dotenv
 import snscrape.modules.twitter as sntwitter
