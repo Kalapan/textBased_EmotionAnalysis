@@ -9,7 +9,7 @@ import sys
 #show which env file the credentials are stored in
 config = dotenv_values(".env")
 #connect to the mongodb database
-client = MongoClient(config["MongoLogIn"])
+client = MongoClient(pythonMongoLogIn)
 #get database
 db = client.get_database('User')
 #get collection object in database
