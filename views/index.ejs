@@ -8,35 +8,6 @@
 		<link rel="stylesheet" href="./css/login-registration.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$( "#form1" ).submit(function(event) {
-					event.preventDefault();
-					$.ajax({
-						type: 'POST',
-						url: '/',
-						data: $('#form1').serialize(),
-						dataType: "json",
-						success: function(response){
-							//alert("a");
-							//console.log(response.Success);
-							$('#form1')[0].reset();
-
-							document.getElementById("check").innerHTML=response.Success;
-								//ADD THIS CODE
-								setTimeout(function(){
-									document.getElementById("check").innerHTML="";
-								},3000);
-								if (response.Success=="You are regestered,You can login now.") {
-									document.getElementById("aa").click();
-								};
-							},
-							error: function() {
-							}
-						})
-				});
-			});
-		</script>
 	</head>
 	<body>	
 		<div class="user-card-container">
@@ -48,7 +19,7 @@
                     <h1>Register</h1>
                     <div>Please Register to use Platform</div>
                 </div>
-                <form class="user-card-form" id="form1" method="post">
+                <form class="user-card-form" id="form1" method="post" action="/register">
                     <div class="form-item">
                         <span class="form-item-icon material-symbols-rounded">mail</span>
                         <input type="text" name="email" placeholder="Enter Email" required autofocus>
@@ -70,10 +41,6 @@
                 <div class="user-card-footer">
                     Already Have an Account? <a href="/login">Login</a>
                 </div>
-				<div class="form-item-other">
-					<span style="background-color: red" id="check"></span>
-				</div>
-				<div id="LangTable"><a href="/login" id="aa"></a></div>
             </div>
         </div>
 	</body>
