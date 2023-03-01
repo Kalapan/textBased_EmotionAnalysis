@@ -4,7 +4,6 @@ var User = require('../models/user');
 const {spawn} = require('child_process');
 const e = require('express');
 var dotenv = require('dotenv').config()
-let alert = require('alert'); 
 
 let date_ob = new Date();
 let userName = "";
@@ -24,7 +23,7 @@ router.get('/', function (req, res, next) {
 	return res.render('index.ejs');
 });
 
-router.post('/register', function(req, res, next) {
+router.post('/', function(req, res, next) {
 	console.log(req.body);
 	var personInfo = req.body;
 	if(!personInfo.email || !personInfo.password || !personInfo.passwordConf){
@@ -55,35 +54,35 @@ router.post('/register', function(req, res, next) {
 							else
 								console.log('Success');
 						});
-						function performAction(i) {
-							const args = ("0" + (i)).slice(-2);
-							const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
+						// function performAction(i) {
+						// 	const args = ("0" + (i)).slice(-2);
+						// 	const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
 						  
-							childPython.stdout.on('data', (data) => {
-							  console.log(`stdout ${i}: ${data}`);
-							});
+						// 	childPython.stdout.on('data', (data) => {
+						// 	  console.log(`stdout ${i}: ${data}`);
+						// 	});
 						  
-							childPython.stderr.on('data', (data) => {
-							  console.error(`stderr ${i}: ${data}`);
-							});
+						// 	childPython.stderr.on('data', (data) => {
+						// 	  console.error(`stderr ${i}: ${data}`);
+						// 	});
 						  
-							childPython.on('close', (code) => {
-							  console.log(`child process ${i} exited with code ${code}`);
-							});
-						  }
-						for (let i = 1; i <= 4; i++) {
-							setTimeout(() => {
-								performAction(i);
-							}, i * 4000);
-						}
+						// 	childPython.on('close', (code) => {
+						// 	  console.log(`child process ${i} exited with code ${code}`);
+						// 	});
+						//   }
+						// for (let i = 1; i <= 4; i++) {
+						// 	setTimeout(() => {
+						// 		performAction(i);
+						// 	}, i * 4000);
+						// }
 					}).sort({_id: -1}).limit(1);
-					return res.redirect('/login');
+					res.send({"Success":"You have been registered."});
 				}else{
-					alert("Email is already used.")
+					res.send({"Success":"Email is already used."});
 				}
 			});
 		}else{
-			alert("Passwaord does not match.")
+			res.send({"Success":"Passwaord does not match."});
 		}
 	}
 });
@@ -93,17 +92,18 @@ router.get('/login', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
+	//console.log(req.body);
 	User.findOne({email:req.body.email},function(err,data){
 		if(data){
 			
 			if(data.password==req.body.password){
 				req.session.userId = data.unique_id;
-				return res.redirect('/profile');
+				res.send({"Success":"Success!"});
 			}else{
-				alert("Wrong Password");
+				res.send({"Success":"Wrong password!"});
 			}
 		}else{
-			alert("This Email Is not regestered!");
+			res.send({"Success":"This Email Is not regestered!"});
 		}
 	});
 });
@@ -170,7 +170,7 @@ router.post('/update', function (req, res, next) {
 		  console.log(`child process ${i} exited with code ${code}`);
 		});
 	  }
-	for (let i = 1; i <= 1; i++) {
+	for (let i = 1; i <= 4; i++) {
 		setTimeout(() => {
 			performAction(i);
 		}, i * 4000);
@@ -242,7 +242,7 @@ router.post('/forgetpass', function (req, res, next) {
 	User.findOne({email:req.body.email},function(err,data){
 		console.log(data);
 		if(!data){
-			alert("This Email is not regestered!")
+			res.send({"Success":"This Email is not regestered!"});
 		}else{
 			if (req.body.password==req.body.passwordConf) {
 			data.password=req.body.password;
@@ -253,10 +253,10 @@ router.post('/forgetpass', function (req, res, next) {
 					console.log(err);
 				else
 					console.log('Success');
-					alert("Password Changed");
+					res.send({"Success":"Password changed!"});
 			});
 		}else{
-			alert("Password does not matched! Both Password should be same.");
+			res.send({"Success":"Password does not matched! Both Password should be same."});
 		}
 		}
 	});
