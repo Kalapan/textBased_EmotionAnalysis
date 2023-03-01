@@ -54,9 +54,9 @@ router.post('/', function(req, res, next) {
 							else
 								console.log('Success');
 						});
-						for (let i = 1; i <= 8; i++) {
+						function performAction(i) {
 							const args = ("0" + (i)).slice(-2);
-							const childPython = spawn('python', ['tweetDownload2.py', personInfo.twitter_id, args]);
+							const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
 						  
 							childPython.stdout.on('data', (data) => {
 							  console.log(`stdout ${i}: ${data}`);
@@ -70,6 +70,11 @@ router.post('/', function(req, res, next) {
 							  console.log(`child process ${i} exited with code ${code}`);
 							});
 						  }
+						for (let i = 1; i <= 4; i++) {
+							setTimeout(() => {
+								performAction(i);
+							}, i * 4000);
+						}
 					}).sort({_id: -1}).limit(1);
 					res.send({"Success":"You have been registered."});
 				}else{
@@ -151,9 +156,9 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/update', function (req, res, next) {
 	console.log("update")
-	for (let i = 1; i <= 5; i++) {
+	function performAction(i) {
 		const args = ("0" + (i)).slice(-2);
-		const childPython = spawn('python', ['python/tweetDownload2.py', userName.twitter_id, args]);
+		const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
 	  
 		childPython.stdout.on('data', (data) => {
 		  console.log(`stdout ${i}: ${data}`);
@@ -167,6 +172,11 @@ router.post('/update', function (req, res, next) {
 		  console.log(`child process ${i} exited with code ${code}`);
 		});
 	  }
+	for (let i = 1; i <= 4; i++) {
+		setTimeout(() => {
+			performAction(i);
+		}, i * 4000);
+	}
 });
 
 router.post('/dateSelect', function (req, res, next) {
