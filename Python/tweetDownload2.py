@@ -93,10 +93,14 @@ def pullAnalyzeTweet(startDate, endDate):
 #     pullAnalyzeTweet("2022-12-01", "2022-12-31")
 
 if autoMonthInt == 1:
+    pullAnalyzeTweet("2023-01-01", "2023-03-31")
     pullAnalyzeTweet("2022-01-01", "2022-03-31")
 if autoMonthInt == 2:
+    pullAnalyzeTweet("2023-04-01", "2023-06-30")
     pullAnalyzeTweet("2022-04-01", "2022-06-30")
 if autoMonthInt == 3:
+    pullAnalyzeTweet("2023-07-01", "2023-09-30")
     pullAnalyzeTweet("2022-07-01", "2022-09-30")
 if autoMonthInt == 4:
+    pullAnalyzeTweet("2023-10-01", "2023-12-31")
     pullAnalyzeTweet("2022-10-01", "2022-12-31")

@@ -1,232 +1,282 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Welcome</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="./css/tweet.css" />
-		<link rel="stylesheet" href="./css/navbar.css" />
-		<link rel="stylesheet" href="./css/main.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<!--Referencing Google charts-->
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<!--Referencing Google icons page for setting icon-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-		<!--Referencing Google icons page for menu icon-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
-		<script type="text/javascript">
-			let emotionHappiness = '<%-emotionHappiness%>';
-			let HappinessDisplay = '<%-HappinessDisplay%>';
-			let HappDisplay = "";
-			if (emotionHappiness > 0) {
-				HappDisplay = JSON.parse(HappinessDisplay);
-			}
+<html lang="en">
 
-			let emotionAnger = '<%-emotionAnger%>';
-			let angerDisplay = '<%-angerDisplay%>';
-			let angDisplay = "";
-			if (emotionAnger > 0) {
-				angDisplay = JSON.parse(angerDisplay);
-			}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-			let emotionNeutral = '<%-emotionNeutral%>';
-			let neutralDisplay = '<%-neutralDisplay%>';
-			let neutDisplay = "";
-			if (emotionNeutral > 0) {
-				neutDisplay = JSON.parse(neutralDisplay);
-			}
+    <title>TwitterMind Results</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/landingPage.css">
+    <link rel="stylesheet" href="css/owl.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="./css/tweet.css" />
+    <!--Referencing Google charts-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--Referencing Google icons page for setting icon-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <!--Referencing Google icons page for menu icon-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script type="text/javascript">
+        let emotionHappiness = '<%-emotionHappiness%>';
+        let HappinessDisplay = '<%-HappinessDisplay%>';
+        let HappDisplay = "";
+        if (emotionHappiness > 0) {
+            HappDisplay = JSON.parse(HappinessDisplay);
+        }
 
-			let emotionDepression = '<%-emotionDepression%>';
-			let depressionDisplay = '<%-depressionDisplay%>';
-			let depDisplay = "";
-			if(emotionDepression > 0 ) {
-				depDisplay = JSON.parse(depressionDisplay);
-			}
+        let emotionAnger = '<%-emotionAnger%>';
+        let angerDisplay = '<%-angerDisplay%>';
+        let angDisplay = "";
+        if (emotionAnger > 0) {
+            angDisplay = JSON.parse(angerDisplay);
+        }
 
-			let emotionAnxiety = '<%-emotionAnxiety%>';
-			let anxietyDisplay = '<%-anxietyDisplay%>';
-			let anxDisplay = "";
-			if(emotionAnxiety > 0 ) {
-				anxDisplay = JSON.parse(anxietyDisplay);
-			}
+        let emotionNeutral = '<%-emotionNeutral%>';
+        let neutralDisplay = '<%-neutralDisplay%>';
+        let neutDisplay = "";
+        if (emotionNeutral > 0) {
+            neutDisplay = JSON.parse(neutralDisplay);
+        }
 
-			let month = '<%-month%>';
-			let year = '<%-year%>';
-			//Creating the donut chart:
-			google.charts.load("current", {packages:["corechart"]});
-			google.charts.setOnLoadCallback(drawDonutChart);
-			function drawDonutChart() {
-				var data = google.visualization.arrayToDataTable([
-					['Emotion', 'Score'],
-					['Happiness', Number(emotionHappiness)],
-					['Depression', Number(emotionDepression)],
-					['Anger', Number(emotionAnger)],
-					['Anxiety', Number(emotionAnxiety)],
-					['Neutral',	Number(emotionNeutral)]
-				]);
+        let emotionDepression = '<%-emotionDepression%>';
+        let depressionDisplay = '<%-depressionDisplay%>';
+        let depDisplay = "";
+        if(emotionDepression > 0 ) {
+            depDisplay = JSON.parse(depressionDisplay);
+        }
 
-				var options = {
-					title: 'Emotion Score Based on Tweets',
-					pieHole: 0.4,
-					backgroundColor: 'transparent',
-					slices: {
-						0: { color: 'gold' },
-						1: { color: 'blue' },
-						2: { color: 'red' },
-						3: { color: 'purple' },
-						4: { color: 'green' }
-					}
-				};
-				
-				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
-				chart.draw(data, options);
+        let emotionAnxiety = '<%-emotionAnxiety%>';
+        let anxietyDisplay = '<%-anxietyDisplay%>';
+        let anxDisplay = "";
+        if(emotionAnxiety > 0 ) {
+            anxDisplay = JSON.parse(anxietyDisplay);
+        }
 
-				loadDisplayData(emotionHappiness, HappDisplay);
-				loadDisplayData(emotionDepression, depDisplay);
-				loadDisplayData(emotionAnger, angDisplay);
-				loadDisplayData(emotionAnxiety, anxDisplay);
-				loadDisplayData(emotionNeutral, neutDisplay);
+        let month = '<%-month%>';
+        let year = '<%-year%>';
+        //Creating the donut chart:
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawDonutChart);
+        function drawDonutChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Emotion', 'Score'],
+                ['Happiness', Number(emotionHappiness)],
+                ['Depression', Number(emotionDepression)],
+                ['Anger', Number(emotionAnger)],
+                ['Anxiety', Number(emotionAnxiety)],
+                ['Neutral',	Number(emotionNeutral)]
+            ]);
 
-				function selectHandler() {
-				var selectedItem = chart.getSelection()[0];
-					if (selectedItem) {
-						var emotionSelected = data.getValue(selectedItem.row, 0);
-						if (emotionSelected.includes("Happiness")) {
-							updateTweetDisplay();
-							loadDisplayData(emotionHappiness, HappDisplay);
-						}
-						if (emotionSelected.includes("Depression")) {
-							updateTweetDisplay();
-							loadDisplayData(emotionDepression, depDisplay);
-						}
-						if (emotionSelected.includes("Anger")) {
-							updateTweetDisplay();
-							loadDisplayData(emotionAnger, angDisplay);
-						}
-						if (emotionSelected.includes("Anxiety")) {
-							updateTweetDisplay();
-							loadDisplayData(emotionAnxiety, anxDisplay);
-						}
-						if (emotionSelected.includes("Neutral")) {
-							updateTweetDisplay();
-							loadDisplayData(emotionNeutral, neutDisplay);
-						}
-					}
-				}
+            var options = {
+                title: 'Emotion Score Based on Tweets',
+                pieHole: 0.4,
+                backgroundColor: 'transparent',
+                slices: {
+                    0: { color: 'gold' },
+                    1: { color: 'blue' },
+                    2: { color: 'red' },
+                    3: { color: 'purple' },
+                    4: { color: 'green' }
+                }
+            };
+            
+            var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
+            chart.draw(data, options);
 
-				var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
-				google.visualization.events.addListener(chart, 'select', selectHandler);  
-				chart.draw(data, options);
-			}
+            loadDisplayData(emotionHappiness, HappDisplay);
+            loadDisplayData(emotionDepression, depDisplay);
+            loadDisplayData(emotionAnger, angDisplay);
+            loadDisplayData(emotionAnxiety, anxDisplay);
+            loadDisplayData(emotionNeutral, neutDisplay);
 
-			function updateTweetDisplay() {
-				var elem = document.getElementById("tweetDisplay");
-  				elem.parentNode.removeChild(elem);
+            function selectHandler() {
+            var selectedItem = chart.getSelection()[0];
+                if (selectedItem) {
+                    var emotionSelected = data.getValue(selectedItem.row, 0);
+                    if (emotionSelected.includes("Happiness")) {
+                        updateTweetDisplay();
+                        loadDisplayData(emotionHappiness, HappDisplay);
+                    }
+                    if (emotionSelected.includes("Depression")) {
+                        updateTweetDisplay();
+                        loadDisplayData(emotionDepression, depDisplay);
+                    }
+                    if (emotionSelected.includes("Anger")) {
+                        updateTweetDisplay();
+                        loadDisplayData(emotionAnger, angDisplay);
+                    }
+                    if (emotionSelected.includes("Anxiety")) {
+                        updateTweetDisplay();
+                        loadDisplayData(emotionAnxiety, anxDisplay);
+                    }
+                    if (emotionSelected.includes("Neutral")) {
+                        updateTweetDisplay();
+                        loadDisplayData(emotionNeutral, neutDisplay);
+                    }
+                }
+            }
 
-				newHolder = document.createElement('div');
-				newHolder.setAttribute("id", "tweetDisplay");
-				let parent = document.querySelector('.tweetDisplay-card');
-				parent.appendChild(newHolder);
-			}
+            var chart = new google.visualization.PieChart(document.getElementById('donut_chart'));
+            google.visualization.events.addListener(chart, 'select', selectHandler);  
+            chart.draw(data, options);
+        }
 
-			function loadDisplayData(emotionType, emotionDisplay) {
-				for (var i = 0; i < emotionType; i++) {
-					let layoutTweetDateDiv = document.createElement('div');
-					layoutTweetDateDiv.classList.add('tweet_date');
-					let layoutTweetDateDivText = document.createTextNode(emotionDisplay[i].Date); 
-					layoutTweetDateDiv.appendChild(layoutTweetDateDivText);
+        function updateTweetDisplay() {
+            var elem = document.getElementById("tweetDisplay");
+              elem.parentNode.removeChild(elem);
 
-					let layoutTweetEmotionDiv = document.createElement('div');
-					layoutTweetEmotionDiv.classList.add('tweet_emotion');
-					let layoutTweetEmotionDivText = document.createTextNode(emotionDisplay[i].Emotion); 
-					layoutTweetEmotionDiv.appendChild(layoutTweetEmotionDivText);
+            newHolder = document.createElement('div');
+            newHolder.setAttribute("id", "tweetDisplay");
+            let parent = document.querySelector('.tweetDisplay-card');
+            parent.appendChild(newHolder);
+        }
 
-					let layoutTweetEmotionValueDiv = document.createElement('div');
-					layoutTweetEmotionValueDiv.classList.add('tweet_emotionValue');
-					let layoutTweetEmotionValueDivText = document.createTextNode(emotionDisplay[i].Value); 
-					layoutTweetEmotionValueDiv.appendChild(layoutTweetEmotionValueDivText);
+        function loadDisplayData(emotionType, emotionDisplay) {
+            for (var i = 0; i < emotionType; i++) {
+                let layoutTweetDateDiv = document.createElement('div');
+                layoutTweetDateDiv.classList.add('tweet_date');
+                let layoutTweetDateDivText = document.createTextNode(emotionDisplay[i].Date); 
+                layoutTweetDateDiv.appendChild(layoutTweetDateDivText);
 
-					let layoutTweetHeaderMainDiv = document.createElement('div');
-					layoutTweetHeaderMainDiv.classList.add('tweet_header');
-					layoutTweetHeaderMainDiv.appendChild(layoutTweetDateDiv);
-					layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionDiv);
-					layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionValueDiv);
+                let layoutTweetEmotionDiv = document.createElement('div');
+                layoutTweetEmotionDiv.classList.add('tweet_emotion');
+                let layoutTweetEmotionDivText = document.createTextNode(emotionDisplay[i].Emotion); 
+                layoutTweetEmotionDiv.appendChild(layoutTweetEmotionDivText);
 
-					let layoutTweetContentDiv = document.createElement('div');
-					layoutTweetContentDiv.classList.add('tweet_content');
-					let layoutTweetContentDivText = document.createTextNode(emotionDisplay[i].Tweet); 
-					layoutTweetContentDiv.appendChild(layoutTweetContentDivText);
+                let layoutTweetEmotionValueDiv = document.createElement('div');
+                layoutTweetEmotionValueDiv.classList.add('tweet_emotionValue');
+                let layoutTweetEmotionValueDivText = document.createTextNode(emotionDisplay[i].Value); 
+                layoutTweetEmotionValueDiv.appendChild(layoutTweetEmotionValueDivText);
 
-					let layoutTweetDiv = document.createElement('div');
-					layoutTweetDiv.classList.add('tweet');
-					layoutTweetDiv.appendChild(layoutTweetHeaderMainDiv);
-					layoutTweetDiv.appendChild(layoutTweetContentDiv);
-					
-					let layoutDiv = document.createElement('div');
-					layoutDiv.classList.add('layout');
-					layoutDiv.appendChild(layoutTweetDiv);
-					
-					let parent = document.querySelector('#tweetDisplay');
-					parent.appendChild(layoutDiv);
-				}
-			}
+                let layoutTweetHeaderMainDiv = document.createElement('div');
+                layoutTweetHeaderMainDiv.classList.add('tweet_header');
+                layoutTweetHeaderMainDiv.appendChild(layoutTweetDateDiv);
+                layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionDiv);
+                layoutTweetHeaderMainDiv.appendChild(layoutTweetEmotionValueDiv);
 
-			function getMonth(){
-				document.getElementById("month_select").value = month;
-				document.getElementById("year_select").value = year;
-			}
-		</script>
-	</head>
-	<body onload="getMonth()">
-		<header class="nav_header">
-			<img class="logo" src = "loginLogo.png">
-			<nav>
-				<ul class="nav_tabs">
-					<li><p class="username">@<%= name %></p></li>
-					<li><a href="#">About Site</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Settings</a></li>
-				</ul>
-			</nav>
-			<a class="cta" href="/logout"><button class="header_button">Logout</button></a>
-		</header>
-		<div class="chart-card">
-			<div id="donut_chart" style="width: 700px; height: 500px;"></div>
-			<table class="table_selection" id="table_selection">	
-				<td>
-					<div>Sort by:</div>
-					<form id="dateSelect" action="/dateSelect" method="post">
-						<select id="month_select" class="month_select" name="month_select">
-							<option value="01">January</option>
-							<option value="02">February</option>
-							<option value="03">March</option>
-							<option value="04">April</option>
-							<option value="05">May</option>
-							<option value="06">June</option>
-							<option value="07">July</option>
-							<option value="08">August</option>
-							<option value="09">September</option>
-							<option value="10">October</option>
-							<option value="11">November</option>
-							<option value="12">December</option>
-						</select>
-						<select id="year_select" class="year_select" name="year_select">
-							<option value="2023">2023</option>
-							<option value="2022">2022</option>
-						</select>
-						<input type="submit" name="submit"/>
-					</form>
-				</td>
-			</table>
-		</div>
-		<div class="tweetDisplay-card">
-			<div id="tweetDisplay"></div>
-		</div>
-		<form id="getTwitterID" method="post" action="/update">
-			<button type="submit" value="update" id="update">Update</button>
-		</form>
-	</body>
+                let layoutTweetContentDiv = document.createElement('div');
+                layoutTweetContentDiv.classList.add('tweet_content');
+                let layoutTweetContentDivText = document.createTextNode(emotionDisplay[i].Tweet); 
+                layoutTweetContentDiv.appendChild(layoutTweetContentDivText);
+
+                let layoutTweetDiv = document.createElement('div');
+                layoutTweetDiv.classList.add('tweet');
+                layoutTweetDiv.appendChild(layoutTweetHeaderMainDiv);
+                layoutTweetDiv.appendChild(layoutTweetContentDiv);
+                
+                let layoutDiv = document.createElement('div');
+                layoutDiv.classList.add('layout');
+                layoutDiv.appendChild(layoutTweetDiv);
+                
+                let parent = document.querySelector('#tweetDisplay');
+                parent.appendChild(layoutDiv);
+            }
+        }
+
+        function getMonth(){
+            document.getElementById("month_select").value = month;
+            document.getElementById("year_select").value = year;
+        }
+    </script>
+  </head>
+
+  <body onload="getMonth()">
+    <header class="header-area header-sticky">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                      <a href="/landingPage" class="logo">
+                          <h1>TwitterMind</h1>
+                      </a>
+                      <ul class="nav">
+                        <img class="logo" src = "images/loginLogo.png" style= "width:50px; height:50px; margin-top: -1%;">
+                        <li><a>@<%= name %></a></li>
+                        <li><a href="/landingPage">Home</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>   
+                  </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+
+    
+    <div class="main-banner" id="top">
+        <div class="container" style="padding-top: 100px;">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="item item-1">
+                <div class="header-text">
+                  <h2>MoodMapper <br> Check Results</h2>
+                  <p>On this page you will be able to see your results. The pie grapch on the left visually displays the emotions for the selected month while the table on the right shows the tweets and their assigned emotion. Clicking an emotion on the pie graph will display only the tweets for the selected emotion on the right table.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <div class="displayData">
+        <div class="left">
+            <div class="chart-card">
+                <div id="donut_chart" style="width: 700px; height: 500px;"></div>
+            </div>
+            <table class="table_selection" id="table_selection">	
+                <td>
+                    <div>Sort by:</div>
+                    <form id="dateSelect" action="/dateSelect" method="post">
+                        <select id="month_select" class="month_select" name="month_select">
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select id="year_select" class="year_select" name="year_select">
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                        </select>
+                        <input type="submit" name="submit"/>
+                    </form>
+                </td>
+            </table>
+        </div>
+        <div class="right">
+            <div class="tweetDisplay-card">
+                <div id="tweetDisplay"></div>
+            </div>
+        </div>
+    </div>
+
+    <form id="getTwitterID" method="post" action="/update">
+        <button type="submit" value="update" id="update" class="update">Update</button>
+    </form>
+  
+    <footer>
+      <div class="container">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 TwitterMind. All rights reserved. &nbsp;&nbsp;&nbsp;</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/isotope.min.js"></script>
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
 </html>

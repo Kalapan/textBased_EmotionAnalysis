@@ -17,21 +17,21 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
     <script type="text/javascript">
 		$(document).ready(function(){
-			$( "#form" ).submit(function(event) {
+			$( "#form1" ).submit(function(event) {
 				event.preventDefault();
 				$.ajax({
 					type: 'POST',
-					url: '/login',
-					data: $('#form').serialize(),
+					url: '/register',
+					data: $('#form1').serialize(),
 					dataType: "json",
 					success: function(response){
-						$('#form')[0].reset();
+						$('#form1')[0].reset();
 
 						document.getElementById("check").innerHTML=response.Success;
 							setTimeout(function(){
 								document.getElementById("check").innerHTML="";
 							},3000);
-							if (response.Success=="Success!") {
+							if (response.Success == "You have been registered.") {
 								document.getElementById("aa").click();
 							};
 						},
@@ -67,30 +67,35 @@
 				<img src="images/loginLogo.png" alt="logo">
 			</div>
 			<div class="user-card-header">
-				<h1>Sign In</h1>
-				<div>Please Login to use Platform</div>
+				<h1>Register</h1>
+				<div>Please Register to use Platform</div>
 			</div>
-			<form class="user-card-form" id="form" method="post">
+			<form class="user-card-form" id="form1" method="post">
 				<div class="form-item">
 					<span class="form-item-icon material-symbols-rounded">mail</span>
 					<input type="text" name="email" placeholder="Enter Email" required autofocus>
 				</div>
 				<div class="form-item">
+					<span class="form-item-icon material-symbols-rounded">alternate_email</span>
+					<input type="text" name="twitter_id" placeholder="Enter Twitter ID" required>
+				</div>
+				<div class="form-item">
 					<span class="form-item-icon material-symbols-rounded">lock</span>
 					<input type="password" name="password" placeholder="Enter Password" required>
 				</div>
-				<div class="form-item-other">
-					<a href="/forgetpass">I Forgot my Password</a>
+				<div class="form-item">
+					<span class="form-item-icon material-symbols-rounded">lock</span>
+					<input type="password" name="passwordConf" placeholder="Confirm Password" required>
 				</div>
-				<button type="submit" value="Login">Sign In</button>
+				<button type="submit" value="Register">Register</button>
 			</form>
 			<div class="user-card-footer">
-				Dont have an account? <a href="/register">Create one for Free</a>
+				Already Have an Account? <a href="/login">Login</a>
 			</div>
 			<div class="form-item-other">
 				<span style="background-color: red" id="check"></span>
 			</div>
-			<div id="LangTable"><a href="/landingPage" id="aa"></a></div>
+			<div id="LangTable"><a href="/login" id="aa"></a></div>
 		</div>
 	</div>
   </body>

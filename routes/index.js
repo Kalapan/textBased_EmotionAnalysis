@@ -20,10 +20,14 @@ function resetVals() {
 }
 
 router.get('/', function (req, res, next) {
-	return res.render('index.ejs');
+	return res.render('register.ejs');
 });
 
-router.post('/', function(req, res, next) {
+router.get('/register', function (req, res, next) {
+	return res.render('register.ejs');
+});
+
+router.post('/register', function(req, res, next) {
 	console.log(req.body);
 	var personInfo = req.body;
 	if(!personInfo.email || !personInfo.password || !personInfo.passwordConf){
@@ -56,7 +60,7 @@ router.post('/', function(req, res, next) {
 						});
 						// function performAction(i) {
 						// 	const args = ("0" + (i)).slice(-2);
-						// 	const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
+						// 	const childPython = spawn('python', ['Python/tweetDownload2.py', userName.twitter_id, args]);
 						  
 						// 	childPython.stdout.on('data', (data) => {
 						// 	  console.log(`stdout ${i}: ${data}`);
@@ -75,6 +79,7 @@ router.post('/', function(req, res, next) {
 						// 		performAction(i);
 						// 	}, i * 4000);
 						// }
+						
 					}).sort({_id: -1}).limit(1);
 					res.send({"Success":"You have been registered."});
 				}else{
@@ -92,7 +97,6 @@ router.get('/login', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-	//console.log(req.body);
 	User.findOne({email:req.body.email},function(err,data){
 		if(data){
 			
@@ -106,6 +110,10 @@ router.post('/login', function (req, res, next) {
 			res.send({"Success":"This Email Is not regestered!"});
 		}
 	});
+});
+
+router.get('/landingPage', function (req, res, next) {
+	return res.render('landingPage.ejs');
 });
 
 router.get('/profile', function (req, res, next) {
@@ -156,7 +164,7 @@ router.post('/update', function (req, res, next) {
 	console.log("update")
 	function performAction(i) {
 		const args = ("0" + (i)).slice(-2);
-		const childPython = spawn('python', ['tweetDownload2.py', userName.twitter_id, args]);
+		const childPython = spawn('python', ['Python/tweetDownload2.py', userName.twitter_id, args]);
 	  
 		childPython.stdout.on('data', (data) => {
 		  console.log(`stdout ${i}: ${data}`);
@@ -204,7 +212,7 @@ router.post('/dateSelect', function (req, res, next) {
 		  if (err) throw err;
 		  resetVals();
 			result.forEach(function(emotionType){
-				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion.includes("approval") || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
+				if (emotionType.Emotion.includes("admiration") || emotionType.Emotion.includes("amusement") || emotionType.Emotion == "approval" || emotionType.Emotion.includes("caring") || emotionType.Emotion.includes("desire") || emotionType.Emotion.includes("excitement") || emotionType.Emotion.includes("gratitude") || emotionType.Emotion.includes("joy") || emotionType.Emotion.includes("love") || emotionType.Emotion.includes("optimism") || emotionType.Emotion.includes("pride") || emotionType.Emotion.includes("relief")) {
 					emotionHappiness += 1;
 					Happiness.push(emotionType);
 					HappinessDisplay = JSON.stringify(Happiness);

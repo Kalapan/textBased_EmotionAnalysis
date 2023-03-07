@@ -1,77 +1,102 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Forgot Password</title>
-		<link rel="stylesheet" href="./css/login-registration.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$( "#form2" ).submit(function(event) {
-					event.preventDefault();
-					$.ajax({
-						type: 'POST',
-						url: '/forgetpass',
-						data: $('#form2').serialize(),
-						dataType: "json",
-						success: function(response){
-							//alert("a");
-							//console.log(response.Success);
-							$('#form2')[0].reset();
-							//alert("abc");
-							document.getElementById("check").innerHTML=response.Success;
+<html lang="en">
 
-							setTimeout(function(){
-								document.getElementById("check").innerHTML="";
-							},3000);
-							if (response.Success=="Password changed!") {
-								document.getElementById("aa").click();
-							};
-						},
-						error: function() {
-						}
-					})
-				});
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Change Password</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/landingPage.css">
+    <link rel="stylesheet" href="css/owl.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="css/login-registration.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,300,0,0" />
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$( "#form2" ).submit(function(event) {
+				event.preventDefault();
+				$.ajax({
+					type: 'POST',
+					url: '/forgetpass',
+					data: $('#form2').serialize(),
+					dataType: "json",
+					success: function(response){
+						//alert("a");
+						//console.log(response.Success);
+						$('#form2')[0].reset();
+						//alert("abc");
+						document.getElementById("check").innerHTML=response.Success;
 
+						setTimeout(function(){
+							document.getElementById("check").innerHTML="";
+						},3000);
+						if (response.Success=="Password changed!") {
+							document.getElementById("aa").click();
+						};
+					},
+					error: function() {
+					}
+				})
 			});
-		</script>
-	</head>
-	<body>
-		<div class="user-card-container">
-            <div class="user-card">
-                <div class="user-card-logo">
-                    <img src="loginLogo.png" alt="logo">
-                </div>
-                <div class="user-card-header">
-                    <h1>Change Password</h1>
-                    <div>Please Enter the Required Information</div>
-                </div>
-                <form class="user-card-form" id="form2" method="post">
-                    <div class="form-item">
-                        <span class="form-item-icon material-symbols-rounded">mail</span>
-                        <input type="text" name="email" placeholder="Enter Email" required autofocus>
-                    </div>
-                    <div class="form-item">
-                        <span class="form-item-icon material-symbols-rounded">lock</span>
-                        <input type="password" name="password" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-item">
-                        <span class="form-item-icon material-symbols-rounded">lock</span>
-                        <input type="password" name="passwordConf" placeholder="Enter Password" required>
-                    </div>
-                    <button type="submit" value="Change">Change Password</button>
-                </form>
-                <div class="user-card-footer">
-                    Login? <a href="/login">Click Here</a>
-                </div>
-				<div class="form-item-other">
-					<span style="background-color: red" id="check"></span>
+
+		});
+	</script>
+  </head>
+
+  <body>
+    <header class="header-area header-sticky">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                      <a href="" class="logo">
+                          <h1>TwitterMind</h1>
+                      </a>
+                      <ul class="nav">
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    </ul>   
+                  </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+    <div class="user-card-container">
+		<div class="user-card">
+			<div class="user-card-logo">
+				<img src="images/loginLogo.png" alt="logo">
+			</div>
+			<div class="user-card-header">
+				<h1>Change Password</h1>
+				<div>Please Enter the Required Information</div>
+			</div>
+			<form class="user-card-form" id="form2" method="post">
+				<div class="form-item">
+					<span class="form-item-icon material-symbols-rounded">mail</span>
+					<input type="text" name="email" placeholder="Enter Email" required autofocus>
 				</div>
-				<div id="LangTable"><a href="/login" id="aa"></a></div>
-            </div>
-        </div>
-	</body>
+				<div class="form-item">
+					<span class="form-item-icon material-symbols-rounded">lock</span>
+					<input type="password" name="password" placeholder="Enter Password" required>
+				</div>
+				<div class="form-item">
+					<span class="form-item-icon material-symbols-rounded">lock</span>
+					<input type="password" name="passwordConf" placeholder="Enter Password" required>
+				</div>
+				<button type="submit" value="Change">Change Password</button>
+			</form>
+			<div class="user-card-footer">
+				Login? <a href="/login">Click Here</a>
+			</div>
+			<div class="form-item-other">
+				<span style="background-color: red" id="check"></span>
+			</div>
+			<div id="LangTable"><a href="/login" id="aa"></a></div>
+		</div>
+	</div>
+  </body>
 </html>

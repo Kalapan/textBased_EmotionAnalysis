@@ -17,30 +17,25 @@
 .tweet_date {
   font-size: 15px;
   font-weight: 700;
-  color: #14171a;
+  color: black;
   margin-right: 5px;
   width: 150px;
 }
 
 .tweet_emotion {
-  color: #5b7083;
+  color: black;
   font-size: 15px;
   width: 100px;
 }
 
 .tweet_emotionValue {
   margin-left: 50px;
-  color: #657786;
+  color: black;
 }
 .tweet_content {
   margin-top: 8%;
   margin-left: -45%;
   width: 350px;
-}
-
-body {
-  background-color: #fcfcfc;
-  margin: 0;
 }
 
 #tweetDisplay {
@@ -50,4 +45,33 @@ body {
   z-index: 3;
   top: 13%;
   margin-left: 3%;
+}
+
+.displayData {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.left, .right {
+  width: 50%;
+}
+
+.left {
+  float: left;
+  margin-left: 15%;
+}
+
+.right {
+  float: right;
+}
+
+.table_selection {
+  text-align: center;
+  margin-left: 12%;
+}
+
+.update {
+  margin-left: 47%;
 }

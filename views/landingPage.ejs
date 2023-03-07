@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>TwitterMind</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/landingPage.css">
+    <link rel="stylesheet" href="css/owl.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+  </head>
+
+  <body>
+    <header class="header-area header-sticky">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                      <a href="#" class="logo">
+                          <h1>TwitterMind</h1>
+                      </a>
+                      <ul class="nav">
+                        <li><a href="#about-us">About Us</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="/profile">Your Results</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>   
+                  </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+
+    <div class="main-banner" id="top">
+      <div class="container" style="padding-top: 100px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="item item-1">
+              <div class="header-text">
+                <h2>Welcome to MoodMapper</h2>
+                <p>MoodMapper is a program that pulls the tweets of users and assigns an emotion based on the contents of that tweet. This program is used to detect a person's depression state. </p>
+              </div>
+              <div class="buttons">
+                <div class="main-button">
+                  <a href="/profile">View Your Results</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section about-us" id="about-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 offset-lg-1">
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    How are the tweets analyzed?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    The twitter tweets are analyzed using the <strong>RoBERTa</strong> model. The RoBERTa model relies on a data set called <strong>GoEmotions</strong> which is used to train the AI. This data set helps the AI assign an emotion to each tweet that is sent through it.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    What is RoBERTa?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <strong>RoBERTa</strong> is a transformer based language model that uses self attention to process the data inputed and generate contextualized representations of words in phrases/sentences.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    What is GoEmotions?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <strong>GoEmotions</strong> is a dataset with over 58,000 reddit comments each with its own labeled emotion. 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 align-self-center">
+            <div class="section-heading">
+              <h6>About Us</h6>
+              <h2>What make us a great emotion analysis tool for Twitter?</h2>
+              <p>Our progam is great as it uses the RoBERTa language model and is trained using over 58,000 data points to get the most accurate results. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-it-works section" id="how-it-works">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6  align-self-center">
+            <div class="section-heading">
+              <h6>How it Works</h6>
+              <h2>How MoodMapper works</h2>
+              <p>The program functions with the help of the <strong>Twitter API</strong> and <strong>RoBERTa.</strong> The program starts off by requiring users to register using their email, password and Twitter ID. This information is then stored in a <strong>MongoDB</strong> database and sent over to python to start pulling the tweets. The tweets are pulled using python and then analyzed using the RoBERTa model. After the tweets are analyzed, it is sent over to the database and stored. Then the data is pulled from the database and displayed to the user in the form of a website.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="section fun-facts">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="wrapper">
+              <div class="row">
+                <div class="col-lg-3 col-md-6">
+                  <div class="counter">
+                    <h2 class="timer count-title count-number" data-to="58000" data-speed="1000"></h2>
+                     <p class="count-text ">GoEmotions Reddit Comments</p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="counter">
+                    <h2 class="timer count-title count-number" data-to="28" data-speed="1000"></h2>
+                    <p class="count-text ">Emotions</p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="counter">
+                    <h2 class="timer count-title count-number" data-to="5" data-speed="1000"></h2>
+                    <p class="count-text ">Main Emotions</p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="counter end">
+                    <h2 class="timer count-title count-number" data-to="4" data-speed="1000"></h2>
+                    <p class="count-text ">Team Members</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="team section" id="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="team-member">
+              <div class="main-content">
+                <span class="category">Back-End</span>
+                <h4>Kalapan Kannathasan</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="team-member">
+              <div class="main-content">
+                <span class="category">Front-End</span>
+                <h4>Zain Butt</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="team-member">
+              <div class="main-content">
+                <span class="category">Back-End</span>
+                <h4>Alec De Sousa</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="team-member">
+              <div class="main-content">
+                <span class="category">Front-End</span>
+                <h4>Rubbia Pasha</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  
+    <footer>
+      <div class="container">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 TwitterMind. All rights reserved. &nbsp;&nbsp;&nbsp;</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/isotope.min.js"></script>
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>
