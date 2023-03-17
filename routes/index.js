@@ -58,28 +58,27 @@ router.post('/register', function(req, res, next) {
 							else
 								console.log('Success');
 						});
-						// function performAction(i) {
-						// 	const args = ("0" + (i)).slice(-2);
-						// 	const childPython = spawn('python', ['Python/tweetDownload2.py', userName.twitter_id, args]);
+						function performAction(i) {
+							const args = ("0" + (i)).slice(-2);
+							const childPython = spawn('python', ['Python/tweetDownload2.py', personInfo.twitter_id, args]);
 						  
-						// 	childPython.stdout.on('data', (data) => {
-						// 	  console.log(`stdout ${i}: ${data}`);
-						// 	});
+							childPython.stdout.on('data', (data) => {
+							  console.log(`stdout ${i}: ${data}`);
+							});
 						  
-						// 	childPython.stderr.on('data', (data) => {
-						// 	  console.error(`stderr ${i}: ${data}`);
-						// 	});
+							childPython.stderr.on('data', (data) => {
+							  console.error(`stderr ${i}: ${data}`);
+							});
 						  
-						// 	childPython.on('close', (code) => {
-						// 	  console.log(`child process ${i} exited with code ${code}`);
-						// 	});
-						//   }
-						// for (let i = 1; i <= 4; i++) {
-						// 	setTimeout(() => {
-						// 		performAction(i);
-						// 	}, i * 4000);
-						// }
-						
+							childPython.on('close', (code) => {
+							  console.log(`child process ${i} exited with code ${code}`);
+							});
+						  }
+						for (let i = 1; i <= 4; i++) {
+							setTimeout(() => {
+								performAction(i);
+							}, i * 4000);
+						}
 					}).sort({_id: -1}).limit(1);
 					res.send({"Success":"You have been registered."});
 				}else{
@@ -266,6 +265,34 @@ router.post('/forgetpass', function (req, res, next) {
 		}else{
 			res.send({"Success":"Password does not matched! Both Password should be same."});
 		}
+		}
+	});
+	
+});
+
+router.get('/editProfile', function (req, res, next) {
+	res.render("editProfile.ejs");
+});
+
+router.post('/editProfile', function (req, res, next) {
+	User.findOne({email:req.body.email},function(err,data){
+		console.log(data);
+		if(!data){
+			res.send({"Success":"This Email is not regestered!"});
+		}else{
+			if (req.body.password==req.body.passwordConf) {
+				data.twitter_id=req.body.twitter_id;
+				data.password=req.body.password;
+				data.passwordConf=req.body.passwordConf;
+
+				data.save(function(err, Person){
+					if(err)
+						console.log(err);
+					else
+						console.log('Success Credentials Changed');
+						res.send({"Success":"Credentials changed!"});
+				});
+			}
 		}
 	});
 	

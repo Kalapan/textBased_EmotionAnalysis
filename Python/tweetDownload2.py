@@ -22,12 +22,12 @@ model = TFRobertaForSequenceClassification.from_pretrained("arpanghoshal/EmoRoBE
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
 #assign the users twitter id to userID
-userID = str(sys.argv[1])
-# userID  = 'elonMusk'
+# userID = str(sys.argv[1])
+userID  = 'elonMusk'
 # autoMonthStart = str(sys.argv[2])
 # autoMonthInt = int(sys.argv[2]) + 1
 # autoMonthEnd = str(autoMonthInt)
-autoMonthInt = int(sys.argv[2])
+autoMonthInt = 2
 
 def pullAnalyzeTweet(startDate, endDate):
     fromTag = "from:"
@@ -39,7 +39,7 @@ def pullAnalyzeTweet(startDate, endDate):
     dataExists = 0
     # Using TwitterSearchScraper to scrape data and append tweets to list
     for i,tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-        if i>500:
+        if i>5:
             break
         #make an array to hold the data
         data = []
@@ -73,6 +73,7 @@ def pullAnalyzeTweet(startDate, endDate):
             df = pd.DataFrame(data, columns = columns)
             # make the dataframe a dictionary
             data = df.to_dict(orient = "records")
+            print(data)
             # send the dictionary to mongodb
             tweets_collection.insert_many(data)
             print("Data inserted into the database.")
